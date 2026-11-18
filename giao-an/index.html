@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Giáo án cá nhân · Quang Slimfit Coach</title>
+<meta property="og:title" content="Lên giáo án tập luyện cá nhân">
+<meta property="og:description" content="Nhập tuổi, chiều cao, cân nặng để nhận lịch tập, lộ trình 4 tuần và calo, đạm riêng cho bạn. Quang Slimfit Coach.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --bg:#FBE9DA; --surface:#FFFFFF; --ink:#2A1A12; --muted:#6E5546; --line:#EED9C8;
+  --accent:#C2461A; --accent-soft:#F6D3BE; --dark:#2A1A12; --on-dark:#FBE9DA; --hi:#F7A56F; --ok:#2F7A4B;
+  --display:"Lexend",system-ui,sans-serif; --body:"Be Vietnam Pro",system-ui,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#1A120D; --surface:#241913; --ink:#F3E6DC; --muted:#BFA594; --line:#3B2A20;
+  --accent:#F08A5D; --accent-soft:#3D2418; --dark:#0F0A07; --on-dark:#F3E6DC; --hi:#F7A56F; --ok:#6FC891; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#1A120D; --surface:#241913; --ink:#F3E6DC; --muted:#BFA594; --line:#3B2A20;
+  --accent:#F08A5D; --accent-soft:#3D2418; --dark:#0F0A07; --on-dark:#F3E6DC; --hi:#F7A56F; --ok:#6FC891; color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.55}
+.wrap{max-width:640px;margin:0 auto;padding-block:28px 56px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.2;text-wrap:balance}
+h1{font-size:1.9rem;font-weight:800} h2{font-size:1.2rem;font-weight:700} h3{font-size:1rem;font-weight:700}
+.brand{font:700 .78rem var(--display);letter-spacing:.12em;color:var(--accent)}
+.lead{color:var(--muted);margin:6px 0 0}
+.back{color:var(--accent);font-weight:600;text-decoration:none;font-size:.9rem}
+form{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:18px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.full{grid-column:1/-1}
+label{display:flex;flex-direction:column;gap:6px;font-weight:600;font-size:.9rem;min-width:0}
+input,select{font:500 1.05rem var(--body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:11px 12px;width:100%}
+input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.seg{display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:8px}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg label{position:relative;flex-direction:row;justify-content:center;text-align:center;padding:11px 6px;border:1px solid var(--line);border-radius:10px;background:var(--bg);cursor:pointer;font-weight:600}
+.seg label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
+.seg label:has(input:focus-visible){outline:2px solid var(--accent)}
+.legend{font-weight:600;font-size:.9rem;margin-bottom:6px}
+.err{color:var(--accent);font-weight:600;font-size:.9rem;margin:0}
+.hero{background:var(--dark);color:var(--on-dark);border-radius:18px;padding:22px;display:flex;flex-direction:column;gap:8px}
+.hero small{font-size:.85rem;opacity:.85}
+.tag{align-self:flex-start;font:700 .75rem var(--display);letter-spacing:.08em;background:var(--hi);color:#2A1A12;border-radius:999px;padding:4px 10px}
+.big{font:800 2.6rem var(--display);color:var(--hi);line-height:1.05;font-variant-numeric:tabular-nums}
+.big span{font-size:1.05rem;font-weight:600;color:var(--on-dark)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.stat b{display:block;font:700 1.2rem var(--display);font-variant-numeric:tabular-nums}
+.stat span{font-size:.78rem;color:var(--muted)}
+section{display:flex;flex-direction:column;gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.card-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:12px 16px;background:var(--accent-soft)}
+.card-h b{font-family:var(--display)}
+.card-h span{font-size:.85rem;color:var(--muted);text-align:right}
+.rest .card-h{background:transparent}
+.ex{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 16px;border-top:1px solid var(--line)}
+.ex .n{font-weight:600}
+.ex .s{font:700 .95rem var(--display);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.ex .t{grid-column:1/-1;font-size:.82rem;color:var(--muted)}
+.foot{padding:10px 16px;border-top:1px solid var(--line);font-size:.85rem;color:var(--muted)}
+.week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.week div{border-radius:10px;padding:8px 2px;text-align:center;font-size:.72rem;background:var(--surface);border:1px solid var(--line);min-width:0}
+.week div b{display:block;font:700 .85rem var(--display)}
+.week .on{background:var(--accent);border-color:var(--accent);color:#fff}
+.rows{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.rows div{display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 12px;padding:11px 16px;border-top:1px solid var(--line)}
+.rows div:first-child{border-top:0}
+.rows b{font-family:var(--display);white-space:nowrap}
+.rows span{color:var(--ink)}
+.rows em{font-style:normal;color:var(--muted);font-size:.85rem;display:block}
+.macro{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.goal{background:var(--accent-soft);border-radius:14px;padding:16px;display:flex;flex-direction:column;gap:6px}
+.goal b{font-family:var(--display);color:var(--accent)}
+ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+button{font:700 1rem var(--display);border:0;border-radius:12px;padding:14px;cursor:pointer;background:var(--accent);color:#fff}
+button.alt{background:var(--surface);color:var(--accent);border:1px solid var(--accent)}
+button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.note{font-size:.82rem;color:var(--muted)}
+.who{font:700 1rem var(--display);color:var(--on-dark)}
+@media (max-width:480px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.big{font-size:2.2rem}.week div{font-size:.62rem}}
+@media print{
+  :root{--bg:#fff;--surface:#fff;--dark:#fff;--on-dark:#2A1A12;--hi:#C2461A;--accent-soft:#F6E4D8}
+  form,.actions,.no-print,.err{display:none!important}
+  .wrap{max-width:none;padding:0;gap:14px}
+  .hero{border:1px solid #ddd}
+  .card,.goal,.rows{break-inside:avoid}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <a class="back no-print" href="../">← Bảng tính calo</a>
+    <div class="brand" style="margin-top:10px">QUANG SLIMFIT COACH</div>
+    <h1>Lên giáo án tập luyện cá nhân</h1>
+    <p class="lead">Nhập thông tin của bạn để nhận lịch tập theo tuần, lộ trình 4 tuần, lượng calo và đạm phù hợp với tuổi và cân nặng.</p>
+  </header>
+
+  <form id="f" novalidate>
+    <label class="full">Tên học viên (không bắt buộc)<input id="name" type="text" maxlength="40" placeholder="VD: Minh Anh" autocomplete="off"></label>
+    <div class="full seg" role="radiogroup" aria-label="Giới tính">
+      <label><input type="radio" name="sex" value="m" checked><span>Nam</span></label>
+      <label><input type="radio" name="sex" value="f"><span>Nữ</span></label>
+    </div>
+    <label>Tuổi<input id="age" type="number" inputmode="numeric" min="14" max="70" value="22"></label>
+    <label>Chiều cao (cm)<input id="h" type="number" inputmode="numeric" min="130" max="210" value="170"></label>
+    <label>Cân nặng hiện tại (kg)<input id="w" type="number" inputmode="decimal" min="30" max="150" step="0.5" value="55"></label>
+    <label>Cân nặng mong muốn (kg)<input id="tw" type="number" inputmode="decimal" min="30" max="150" step="0.5" value="62"></label>
+
+    <div class="full"><div class="legend">Kinh nghiệm tập</div>
+      <div class="seg" role="radiogroup" aria-label="Kinh nghiệm tập">
+        <label><input type="radio" name="lvl" value="new" checked><span>Mới tập</span></label>
+        <label><input type="radio" name="lvl" value="exp"><span>Đã tập trên 6 tháng</span></label>
+      </div></div>
+    <div class="full"><div class="legend">Nơi tập</div>
+      <div class="seg" role="radiogroup" aria-label="Nơi tập">
+        <label><input type="radio" name="place" value="gym" checked><span>Phòng gym</span></label>
+        <label><input type="radio" name="place" value="home"><span>Tại nhà</span></label>
+      </div></div>
+    <div class="full"><div class="legend">Số buổi tập mỗi tuần</div>
+      <div class="seg" style="--n:3" role="radiogroup" aria-label="Số buổi tập mỗi tuần">
+        <label><input type="radio" name="days" value="3" checked><span>3 buổi</span></label>
+        <label><input type="radio" name="days" value="4"><span>4 buổi</span></label>
+        <label><input type="radio" name="days" value="5"><span>5 buổi</span></label>
+      </div></div>
+    <label class="full">Công việc hằng ngày
+      <select id="job">
+        <option value="1.2">Ngồi nhiều (văn phòng, học sinh, sinh viên)</option>
+        <option value="1.3">Đi lại nhiều (bán hàng, giao hàng)</option>
+        <option value="1.45">Lao động nặng (công trình, bốc vác)</option>
+      </select></label>
+    <label class="full">Tốc độ thay đổi cân nặng
+      <select id="pace">
+        <option value="300">Chậm và chắc (khoảng 0,25–0,3 kg/tuần)</option>
+        <option value="500" selected>Vừa phải (khoảng 0,5 kg/tuần)</option>
+      </select></label>
+  </form>
+
+  <p class="err" id="err" hidden>Bạn kiểm tra lại các ô: tuổi 14–70, chiều cao 130–210 cm, cân nặng 30–150 kg.</p>
+
+  <div id="out" style="display:flex;flex-direction:column;gap:22px">
+    <div class="hero">
+      <span class="tag" id="goal-tag">TĂNG CÂN, TĂNG CƠ</span>
+      <div class="who" id="who" hidden></div>
+      <small>Mỗi ngày bạn cần ăn khoảng</small>
+      <div class="big" id="kcal">–</div>
+      <small id="kcal-note"></small>
+    </div>
+    <div class="stats">
+      <div class="stat"><b id="bmi">–</b><span id="bmi-l">BMI</span></div>
+      <div class="stat"><b id="tdee">–</b><span>Calo giữ cân</span></div>
+      <div class="stat"><b id="water">–</b><span>Nước mỗi ngày</span></div>
+      <div class="stat"><b id="sleep">7–9 h</b><span>Ngủ mỗi đêm</span></div>
+    </div>
+
+    <section>
+      <h2>Lịch tập trong tuần</h2>
+      <div class="week" id="week"></div>
+      <p class="note" id="split-note" style="margin:0"></p>
+    </section>
+
+    <section>
+      <h2>Chi tiết từng buổi</h2>
+      <p class="note" style="margin:0" id="warm"></p>
+      <div id="sessions" style="display:flex;flex-direction:column;gap:12px"></div>
+    </section>
+
+    <section>
+      <h2>Lộ trình 4 tuần đầu</h2>
+      <div class="rows" id="prog"></div>
+    </section>
+
+    <section>
+      <h2>Ăn uống mỗi ngày</h2>
+      <div class="macro">
+        <div class="stat"><b id="p">–</b><span>Đạm</span></div>
+        <div class="stat"><b id="c">–</b><span>Tinh bột</span></div>
+        <div class="stat"><b id="fat">–</b><span>Chất béo</span></div>
+      </div>
+      <div class="rows" id="meals"></div>
+    </section>
+
+    <div class="goal" id="goal"></div>
+
+    <section>
+      <h2>Lưu ý riêng cho bạn</h2>
+      <ul class="tips" id="tips"></ul>
+    </section>
+
+    <div class="actions">
+      <button type="button" id="print">In / lưu PDF</button>
+      <button type="button" class="alt" id="share">Sao chép link</button>
+    </div>
+    <p class="note" id="share-msg" role="status" style="margin:-10px 0 0;text-align:center"></p>
+  </div>
+
+  <p class="note">Giáo án được tạo tự động dựa trên công thức Mifflin-St Jeor và các nguyên tắc tập luyện phổ biến, chỉ mang tính tham khảo. Sau 2 tuần hãy cân lại và điều chỉnh. Nếu bạn có bệnh tim mạch, huyết áp, chấn thương xương khớp hoặc đang mang thai, hãy hỏi ý kiến bác sĩ trước khi tập.</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const radio=n=>document.querySelector(`input[name=${n}]:checked`).value;
+const fmt=n=>Math.round(n).toLocaleString('vi-VN');
+const r10=n=>Math.round(n/10)*10;
+const dec=n=>String(+(+n).toFixed(1)).replace('.',',');
+
+/* Thư viện bài tập: g = phòng gym, h = tại nhà, k = loại (c: bài đa khớp, i: bài cô lập, core: bụng), tip = lưu ý kỹ thuật */
+const EX={
+  squat:{g:'Squat tạ đòn',gN:'Goblet squat (ôm tạ đơn)',h:'Squat (ôm balo hoặc bình nước)',k:'c',tip:'Lưng thẳng, đầu gối hướng theo mũi chân, xuống tới khi đùi song song sàn.'},
+  bench:{g:'Đẩy ngực tạ đòn ghế phẳng',gN:'Đẩy ngực tạ đơn ghế phẳng',h:'Hít đất (mới tập thì chống gối)',k:'c',tip:'Siết bả vai ra sau, hạ chậm 2 giây.'},
+  row:{g:'Kéo cáp ngồi',h:'Chèo balo / tạ đơn một tay',k:'c',tip:'Kéo bằng lưng, khuỷu tay sát người, không giật.'},
+  ohp:{g:'Đẩy vai tạ đơn ngồi',h:'Pike push-up (hít đất chổng mông)',k:'c',tip:'Siết bụng, không ưỡn lưng.'},
+  rdl:{g:'Romanian deadlift tạ đòn',gN:'Romanian deadlift tạ đơn',h:'Gập hông một chân (ôm balo)',k:'c',tip:'Đẩy hông ra sau, tạ đi sát chân, lưng luôn thẳng.'},
+  pulldown:{g:'Kéo xô (lat pulldown)',h:'Kéo khăn vào cửa / hít xà nếu có xà',k:'c',tip:'Kéo thanh về ngực trên, ưỡn ngực nhẹ.'},
+  incline:{g:'Đẩy ngực dốc lên tạ đơn',h:'Hít đất chân đặt cao',k:'c',tip:'Ghế nghiêng 30 độ, hạ tạ ngang ngực trên.'},
+  legpress:{g:'Đạp đùi (leg press)',h:'Bulgarian split squat (chân sau gác ghế)',k:'c',tip:'Không khóa khớp gối ở điểm cao nhất.'},
+  lunge:{g:'Lunge tạ đơn',h:'Lunge bước lùi',k:'c',tip:'Gối sau gần chạm sàn, thân người thẳng.'},
+  bbrow:{g:'Chèo tạ đòn',gN:'Chèo tạ đơn một tay',h:'Chèo balo cúi người',k:'c',tip:'Thân gập khoảng 45 độ, kéo tạ về rốn.'},
+  hipthrust:{g:'Hip thrust tạ đòn',h:'Glute bridge (nâng hông)',k:'i',tip:'Siết mông 1 giây ở điểm cao nhất.'},
+  legcurl:{g:'Cuốn đùi sau (máy)',h:'Cuốn đùi sau nằm với khăn trên sàn trơn',k:'i',tip:'Hạ chậm, không nhấc hông.'},
+  calf:{g:'Nhón bắp chân (máy)',h:'Nhón bắp chân trên bậc thang',k:'i',tip:'Xuống sâu, dừng 1 giây ở trên.'},
+  lateral:{g:'Dang tạ đơn sang bên',h:'Dang chai nước sang bên',k:'i',tip:'Tạ nhẹ, nâng tới ngang vai.'},
+  facepull:{g:'Face pull cáp',h:'Superman nằm sấp',k:'i',tip:'Tốt cho tư thế, chống gù vai.'},
+  curl:{g:'Cuốn tạ đơn tay trước',h:'Cuốn balo tay trước',k:'i',tip:'Khuỷu tay giữ yên bên hông.'},
+  tri:{g:'Đẩy cáp tay sau',h:'Chống đẩy ghế (dips trên ghế)',k:'i',tip:'Chỉ cẳng tay chuyển động.'},
+  fly:{g:'Ép ngực máy (pec deck)',h:'Hít đất tay rộng',k:'i',tip:'Cảm nhận ngực căng, không dùng đà.'},
+  plank:{g:'Plank',h:'Plank',k:'core',tip:'Người thẳng một đường từ đầu tới gót.'},
+  deadbug:{g:'Dead bug',h:'Dead bug',k:'core',tip:'Lưng dưới luôn áp sàn.'},
+  crunch:{g:'Gập bụng cáp quỳ',h:'Gập bụng nằm',k:'core',tip:'Thở ra khi gập, không kéo cổ.'}
+};
+const SESS={
+  fullA:{n:'Toàn thân A',l:['squat','bench','row','ohp','plank']},
+  fullB:{n:'Toàn thân B',l:['rdl','pulldown','incline','lunge','curl','deadbug']},
+  fullC:{n:'Toàn thân C',l:['legpress','bbrow','bench','hipthrust','lateral','crunch']},
+  upperA:{n:'Thân trên A',l:['bench','row','ohp','pulldown','curl','tri']},
+  upperB:{n:'Thân trên B',l:['incline','bbrow','pulldown','lateral','facepull','tri']},
+  lowerA:{n:'Thân dưới A',l:['squat','rdl','lunge','legcurl','calf','plank']},
+  lowerB:{n:'Thân dưới B',l:['rdl','legpress','hipthrust','legcurl','calf','crunch']},
+  push:{n:'Đẩy (ngực, vai, tay sau)',l:['bench','incline','ohp','lateral','fly','tri']},
+  pull:{n:'Kéo (lưng, tay trước)',l:['pulldown','bbrow','row','facepull','curl','deadbug']},
+  legs:{n:'Chân, mông',l:['squat','rdl','legpress','hipthrust','calf','plank']}
+};
+const DAYS=['T2','T3','T4','T5','T6','T7','CN'];
+
+function plan(days,lvl){
+  if(days===3) return {slots:[0,2,4],s:lvl==='new'?['fullA','fullB','fullC']:['push','pull','legs'],
+    note:lvl==='new'?'Tập toàn thân 3 buổi: mỗi nhóm cơ được tập 3 lần một tuần, hợp nhất với người mới.':'Chia Đẩy / Kéo / Chân: mỗi buổi dồn sức cho một nhóm cơ.'};
+  if(days===4) return {slots:[0,1,3,4],s:['upperA','lowerA','upperB','lowerB'],note:'Chia thân trên / thân dưới: mỗi nhóm cơ tập 2 lần một tuần.'};
+  return {slots:[0,1,2,4,5],s:lvl==='new'?['upperA','lowerA','fullA','upperB','lowerB']:['push','pull','legs','upperA','lowerB'],
+    note:lvl==='new'?'Thân trên / thân dưới xen buổi toàn thân. Nếu thấy quá mệt, bỏ buổi thứ 4 (T4).':'Đẩy / Kéo / Chân rồi thân trên / thân dưới: khối lượng cao, cần ăn và ngủ đủ.'};
+}
+
+function dose(k,goal,place,age,lvl){
+  if(k==='core') return {s:'3 × '+(lvl==='new'?'20–30 giây':'30–45 giây'),r:'45 giây'};
+  const home=place==='home';
+  let sets=lvl==='new'?3:(k==='c'?4:3), reps, rest;
+  if(home){reps=k==='c'?'10–15':'12–20'; rest=k==='c'?'60–90 giây':'45–60 giây';}
+  else if(goal==='gain'){reps=k==='c'?(age>=40?'8–10':'6–10'):'10–15'; rest=k==='c'?'2–3 phút':'60–90 giây';}
+  else if(goal==='cut'){reps=k==='c'?'8–12':'12–15'; rest=k==='c'?'90 giây':'60 giây';}
+  else {reps=k==='c'?'8–12':'10–15'; rest=k==='c'?'2 phút':'60–90 giây';}
+  if(age>=55&&k==='c') sets=3;
+  return {s:sets+' × '+reps,r:rest};
+}
+
+function exName(e,place,lvl){return place==='home'?e.h:(lvl==='new'&&e.gN?e.gN:e.g)}
+
+function calc(){
+  const sex=radio('sex'),lvl=radio('lvl'),place=radio('place'),days=+radio('days');
+  const age=+$('age').value,h=+$('h').value,w=+$('w').value,tw=+$('tw').value;
+  const job=+$('job').value,pace=+$('pace').value,name=$('name').value.trim();
+  const ok=age>=14&&age<=70&&h>=130&&h<=210&&w>=30&&w<=150&&tw>=30&&tw<=150;
+  $('err').hidden=ok;$('out').style.opacity=ok?1:.35;
+  saveHash();
+  if(!ok)return;
+
+  const goal=tw-w>=1?'gain':(w-tw>=1?'cut':'keep');
+  const bmi=w/((h/100)**2);
+  const bmr=10*w+6.25*h-5*age+(sex==='m'?5:-161);
+  const tdee=bmr*Math.min(job+days*.05,1.9);
+  const floor=sex==='m'?1500:1200;
+  let need=goal==='gain'?tdee+pace:goal==='cut'?Math.max(tdee-pace,floor,bmr):tdee;
+  const realDelta=need-tdee, rate=Math.abs(realDelta)*7/7700;
+
+  // Dinh dưỡng: người BMI cao tính đạm theo cân nặng mong muốn để không bị quá nhiều
+  const pw=bmi>=30?tw:w;
+  const prot=pw*(goal==='cut'?2.0:goal==='gain'?1.8:1.6);
+  const fat=Math.max(need*.25/9,w*.8);
+  const carb=Math.max((need-prot*4-fat*9)/4,0);
+
+  $('goal-tag').textContent={gain:'TĂNG CÂN, TĂNG CƠ',cut:'GIẢM MỠ, GIỮ CƠ',keep:'GIỮ CÂN, SĂN CHẮC'}[goal];
+  $('who').hidden=!name;$('who').textContent=name?'Giáo án của '+name:'';
+  $('kcal').innerHTML=fmt(r10(need))+' <span>kcal</span>';
+  $('kcal-note').textContent=goal==='keep'?'để giữ cân, tập cho người săn chắc hơn':
+    `để ${goal==='gain'?'tăng':'giảm'} khoảng ${dec(rate)} kg mỗi tuần`;
+  $('bmi').textContent=dec(bmi);
+  $('bmi-l').textContent='BMI · '+(bmi<18.5?'thiếu cân':bmi<23?'bình thường':bmi<25?'hơi thừa cân':bmi<30?'thừa cân':'béo phì');
+  $('tdee').textContent=fmt(r10(tdee));
+  $('water').textContent=dec(Math.round(w*.04*10)/10)+' lít';
+
+  // Lịch tuần
+  const P=plan(days,lvl);
+  const cardioDays=goal==='cut'?[1,3,5,6].filter(d=>!P.slots.includes(d)).slice(0,2):[];
+  $('week').innerHTML=DAYS.map((d,i)=>{
+    const j=P.slots.indexOf(i);
+    const label=j>=0?SESS[P.s[j]].n.split(' (')[0]:cardioDays.includes(i)?'Cardio':'Nghỉ';
+    return `<div class="${j>=0?'on':''}"><b>${d}</b>${label}</div>`;
+  }).join('');
+  $('split-note').textContent=P.note;
+
+  $('warm').textContent='Mỗi buổi khoảng '+(lvl==='new'?'45–60':'60–75')+' phút. Khởi động '+(age>=40?'10–12':'5–8')+
+    ' phút trước khi tập (đạp xe hoặc đi bộ nhanh, xoay khớp, làm 1–2 hiệp nhẹ của bài đầu tiên).';
+
+  $('sessions').innerHTML=P.s.map((key,j)=>{
+    const S=SESS[key];
+    const rows=S.l.map(id=>{const e=EX[id],d=dose(e.k,goal,place,age,lvl);
+      return `<div class="ex"><span class="n">${exName(e,place,lvl)}</span><span class="s">${d.s}</span><span class="t">Nghỉ ${d.r} · ${e.tip}</span></div>`}).join('');
+    const fin=goal==='cut'?'Cuối buổi: 15–20 phút cardio (đi bộ dốc, đạp xe hoặc nhảy dây nhẹ).':
+      goal==='gain'?'Không cần cardio thêm. Ăn bữa có đạm và tinh bột trong vòng 2 giờ sau tập.':'Cuối buổi: 10 phút đi bộ nhanh hoặc đạp xe nhẹ.';
+    return `<div class="card"><div class="card-h"><b>${DAYS[P.slots[j]]} · ${S.n}</b><span>${S.l.length} bài</span></div>${rows}<div class="foot">${fin}</div></div>`;
+  }).join('')+
+  `<div class="card rest"><div class="card-h"><b>Ngày nghỉ</b></div><div class="foot">${
+    goal==='cut'?`${cardioDays.length?cardioDays.map(i=>DAYS[i]).join(', ')+': cardio nhẹ 30–40 phút (đi bộ nhanh, đạp xe, bơi). ':''}Ngày còn lại nghỉ hẳn. Cố gắng đi bộ 8.000–10.000 bước mỗi ngày.`:
+    goal==='gain'?'Nghỉ ngơi để cơ phát triển. Có thể đi bộ nhẹ 20–30 phút, giãn cơ. Đừng bỏ bữa vào ngày nghỉ.':
+    'Đi bộ 30 phút hoặc chơi thể thao nhẹ, giãn cơ 10 phút. Đi bộ khoảng 7.000–8.000 bước mỗi ngày.'}</div></div>`;
+
+  // Lộ trình 4 tuần
+  const up=place==='home'?'thêm 1–2 lần mỗi hiệp, hoặc làm chậm lại (3 giây khi hạ xuống)':'tăng 1–2,5 kg cho bài đa khớp hoặc thêm 1–2 lần mỗi hiệp';
+  const prog=[
+    ['Tuần 1','Làm quen','Mỗi bài làm ít hơn 1 hiệp so với giáo án. Chọn mức tạ còn dư sức làm thêm 3–4 lần. Tập trung kỹ thuật, có thể quay video để tự xem lại.'],
+    ['Tuần 2','Đủ khối lượng','Làm đủ số hiệp. Mức tạ còn dư sức 2–3 lần. Ghi lại mức tạ và số lần của từng bài.'],
+    ['Tuần 3','Tăng dần','Bài nào làm được số lần cao nhất ở mọi hiệp thì '+up+'.'],
+    ['Tuần 4','Đẩy mạnh','Tiếp tục tăng như tuần 3, hiệp cuối còn dư 1–2 lần. Sang tuần 5 tập nhẹ 1 tuần (bớt 1/3 số hiệp) rồi lặp lại lộ trình với mức tạ mới.']
+  ];
+  if(age>=40||lvl==='new') prog[3][2]+=' Không tập tới kiệt sức.';
+  $('prog').innerHTML=prog.map(([a,b,c])=>`<div><b>${a}</b><span><b style="font-weight:600">${b}</b><em>${c}</em></span></div>`).join('');
+
+  // Bữa ăn
+  $('p').textContent=Math.round(prot)+' g';
+  $('c').textContent=Math.round(carb)+' g';
+  $('fat').textContent=Math.round(fat)+' g';
+  const M=goal==='cut'?[
+    ['7:00','Bữa sáng',.25,'Trứng luộc, bánh mì nguyên cám hoặc yến mạch, sữa không đường'],
+    ['12:00','Bữa trưa',.35,'Cơm vừa phải, ức gà hoặc cá, nhiều rau xanh'],
+    ['15:30','Bữa phụ',.12,'Sữa chua không đường, trái cây hoặc một nắm hạt'],
+    ['19:00','Bữa tối',.28,'Thịt nạc, đậu phụ hoặc tôm, rau, nửa chén cơm']
+  ]:[
+    ['7:00','Bữa sáng',.22,'Bánh mì trứng, phở hoặc xôi gà, kèm ly sữa'],
+    ['10:00','Bữa phụ 1',.12,'Sữa tươi, chuối, bánh mì bơ đậu phộng'],
+    ['12:00','Bữa trưa',.28,'Cơm đầy chén, thịt hoặc cá, trứng, rau'],
+    ['15:30','Bữa phụ 2',.12,'Sữa chua, yến mạch, các loại hạt (ăn trước buổi tập 1–2 giờ)'],
+    ['19:00','Bữa tối',.26,'Cơm, thịt bò hoặc cá, đậu phụ, canh rau']
+  ];
+  $('meals').innerHTML=M.map(([t,n,p,f])=>`<div><b>${t}</b><span>${n} · ~${fmt(r10(need*p))} kcal, ${Math.round(prot*p)} g đạm<em>${f}</em></span></div>`).join('');
+
+  // Thời gian đạt mục tiêu
+  const g=$('goal');
+  if(goal!=='keep'&&rate>0){
+    const diff=Math.abs(tw-w),weeks=Math.ceil(diff/rate);
+    g.hidden=false;
+    g.innerHTML=`<b>Từ ${dec(w)} kg ${goal==='gain'?'lên':'xuống'} ${dec(tw)} kg</b><span>Cần ${goal==='gain'?'tăng':'giảm'} ${dec(diff)} kg. Nếu ăn đúng, tập đều và ngủ đủ, bạn mất khoảng <b>${weeks} tuần</b> (khoảng ${dec(weeks/4.3)} tháng).</span>`;
+  }else{g.hidden=true}
+
+  // Lưu ý riêng
+  const tips=[];
+  if(age<18) tips.push('Bạn dưới 18 tuổi: ưu tiên học đúng kỹ thuật, không tập thử mức tạ tối đa. Ăn đủ bữa để cơ thể còn phát triển chiều cao.');
+  if(age>=40) tips.push('Từ 40 tuổi: khởi động kỹ hơn, tránh bài nặng dưới 6 lần. Nếu đau khớp (không phải mỏi cơ) thì đổi sang bài máy hoặc giảm tạ.');
+  if(age>=55) tips.push('Từ 55 tuổi: nên khám sức khỏe và đo huyết áp trước khi bắt đầu. Có thể giữ 3 buổi mỗi tuần là đủ.');
+  if(bmi<17) tips.push('BMI của bạn khá thấp. Nếu ăn đủ mà vẫn không lên cân, hãy đi khám để kiểm tra tiêu hóa và tuyến giáp.');
+  if(bmi>=30) tips.push('Để bảo vệ khớp gối, chọn cardio ít va chạm như đạp xe, bơi, đi bộ dốc thay vì chạy hoặc nhảy dây.');
+  if(goal==='gain') tips.push('Khó ăn nhiều thì chia nhỏ bữa, uống thêm sữa hoặc sinh tố chuối, bơ đậu phộng. Ăn được bao nhiêu calo quan trọng hơn ăn món gì.');
+  if(goal==='cut') tips.push('Đừng cắt quá nhiều calo. Ăn đủ đạm và tập tạ để giảm mỡ mà vẫn giữ cơ. Cân có thể lên xuống theo ngày, hãy so trung bình theo tuần.');
+  if(place==='home') tips.push('Tập tại nhà: dùng balo bỏ sách hoặc chai nước làm tạ. Khi làm được hơn 20 lần dễ dàng, hãy thêm tạ hoặc đổi sang biến thể khó hơn.');
+  if(lvl==='new') tips.push('Mới tập sẽ đau mỏi cơ 1–3 ngày đầu, đó là bình thường. Vẫn tập buổi tiếp theo, chỉ cần giảm tạ.');
+  tips.push(goal==='keep'?'Cân mỗi tuần một lần, buổi sáng sau khi đi vệ sinh. Nếu lệch quá 1 kg thì chỉnh thêm hoặc bớt khoảng 200 kcal mỗi ngày.':
+    `Cân mỗi sáng thứ Hai sau khi đi vệ sinh. Sau 2 tuần ${goal==='gain'?'chưa lên cân thì ăn thêm':'chưa giảm cân thì bớt'} khoảng 200 kcal mỗi ngày.`);
+  $('tips').innerHTML=tips.map(t=>`<li>${t}</li>`).join('');
+}
+
+// Lưu thông tin lên link để gửi cho học viên
+const FIELDS=['name','age','h','w','tw','job','pace'],RAD=['sex','lvl','place','days'];
+function saveHash(){
+  const q=new URLSearchParams();
+  FIELDS.forEach(k=>{if($(k).value)q.set(k,$(k).value)});
+  RAD.forEach(k=>q.set(k,radio(k)));
+  history.replaceState(null,'','#'+q.toString());
+}
+function loadHash(){
+  const q=new URLSearchParams(location.hash.slice(1));
+  FIELDS.forEach(k=>{if(q.has(k))$(k).value=q.get(k)});
+  RAD.forEach(k=>{const el=document.querySelector(`input[name=${k}][value="${CSS.escape(q.get(k)||'')}"]`);if(el)el.checked=true});
+}
+$('print').addEventListener('click',()=>window.print());
+$('share').addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(location.href);$('share-msg').textContent='Đã sao chép link. Gửi link này, người nhận sẽ thấy đúng giáo án này.'}
+  catch(e){$('share-msg').textContent='Không sao chép được, bạn hãy sao chép địa chỉ trên thanh trình duyệt.'}
+});
+$('f').addEventListener('input',calc);
+$('f').addEventListener('submit',e=>e.preventDefault());
+loadHash();calc();
+</script>
+</body>
+</html>
