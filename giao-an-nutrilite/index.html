@@ -3,9 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Giáo án Nutrilite · Quang Slimfit Coach</title>
-<meta property="og:title" content="Giáo án giảm cân kết hợp Nutrilite">
-<meta property="og:description" content="Thực đơn theo gram và ước lượng bằng tay, lịch dùng BodyKey, Protein và vitamin Nutrilite, theo dõi kết quả từng tuần. Quang Slimfit Coach.">
+<title>Giáo án Nutrilite</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@600;700;800&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
 <style>
@@ -76,6 +74,66 @@ button:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .addrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.8fr) auto;gap:8px;align-items:end}
 .addrow input,.addrow select{font-size:.9rem;padding:9px 10px}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
+.search input{font-size:1rem}
+.results{border:1px solid var(--line);border-radius:12px;overflow:hidden;margin-top:8px;background:var(--surface)}
+.res{display:flex;width:100%;text-align:left;justify-content:space-between;gap:12px;align-items:center;background:var(--surface);color:var(--ink);border:0;border-top:1px solid var(--line);border-radius:0;padding:10px 14px;font:600 .92rem var(--body)}
+.res:first-child{border-top:0}
+.res:hover{background:var(--bg)}
+.res small{display:block;font-weight:400;color:var(--muted);font-size:.8rem;margin-top:2px}
+.res>b{color:var(--accent);white-space:nowrap;font:700 .85rem var(--display)}
+.res.added>b{color:var(--ok)}
+.addnew{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:10px 14px;border-top:1px solid var(--line);align-items:center}
+.addnew select{font-size:.88rem;padding:8px}
+.addnew p{grid-column:1/-1;font-weight:600;font-size:.9rem}
+.sugg{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.sugg button{background:var(--bg);color:var(--ink);border:1px dashed var(--accent);font:600 .82rem var(--body);padding:6px 10px;border-radius:999px}
+.sugg button:hover{background:var(--accent-soft)}
+.empty{padding:16px;color:var(--muted);font-size:.9rem;text-align:center;background:var(--surface)}
+.x{width:30px;height:30px;padding:0;border-radius:8px;background:var(--bg);color:var(--muted);border:1px solid var(--line);font:700 1rem var(--body);line-height:1}
+.x:hover{color:var(--accent);border-color:var(--accent)}
+details.all{border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+details.all summary{cursor:pointer;padding:12px 14px;font-weight:700;color:var(--accent)}
+details.all .prods{border:0;border-top:1px solid var(--line);border-radius:0 0 12px 12px}
+.imgs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.imgs figure{margin:0;display:flex;flex-direction:column;gap:6px;min-width:0}
+.imgs img{width:100%;height:auto;border-radius:10px;border:1px solid var(--line);display:block}
+.imgs figcaption{display:flex;justify-content:space-between;align-items:center;gap:6px;font-size:.82rem;font-weight:600}
+.imgs figcaption .dlbtn{background:var(--accent);color:#fff;border:0;font:700 .78rem var(--display);padding:6px 10px;border-radius:8px}
+.imgs figcaption button{padding:6px 10px;font-size:.78rem;border-radius:8px}
+#poster-host{position:fixed;left:-20000px;top:0;pointer-events:none}
+/* Ảnh gửi khách: màu cố định vì là ảnh */
+.pst{width:1080px;min-height:1350px;background:#FBE9DA;color:#2A1A12;font-family:"Be Vietnam Pro",Arial,sans-serif;padding:64px 64px 56px;box-sizing:border-box;display:flex;flex-direction:column;gap:26px}
+.pst .pb{font:700 24px Lexend,Arial,sans-serif;letter-spacing:.14em;color:#C2461A}
+.pst h1{font:800 66px/1.1 Lexend,Arial,sans-serif;margin:0;color:#2A1A12}
+.pst .ps{font-size:28px;color:#6E5546;margin-top:8px}
+.pst .pk{display:flex;gap:14px;flex-wrap:wrap}
+.pst .pk div{background:#2A1A12;color:#FBE9DA;border-radius:22px;padding:16px 24px;font-size:22px}
+.pst .pk b{display:block;font:800 40px Lexend,Arial,sans-serif;color:#F7A56F}
+.pst .pm{background:#fff;border-radius:26px;overflow:hidden;border:2px solid #EED9C8}
+.pst .pmh{display:flex;justify-content:space-between;align-items:baseline;background:#F6D3BE;padding:16px 26px}
+.pst .pmh b{font:700 32px Lexend,Arial,sans-serif}
+.pst .pmh span{font-size:24px;color:#6E5546}
+.pst .pf{display:grid;grid-template-columns:1fr auto;gap:2px 20px;padding:12px 26px;border-top:2px solid #F3E2D4}
+.pst .pf:first-of-type{border-top:0}
+.pst .pfn{font-weight:700;font-size:28px}
+.pst .pfg{font:800 30px Lexend,Arial,sans-serif;color:#C2461A;text-align:right}
+.pst .pfe{grid-column:1/-1;font-size:22px;color:#6E5546}
+.pst .pv{padding:12px 26px;background:#E7F2EA;color:#24603A;font-size:23px;font-weight:600;border-top:2px solid #D2E7D8}
+.pst .pt{display:grid;grid-template-columns:110px 1fr;gap:6px 20px;padding:14px 26px;border-top:2px solid #F3E2D4;font-size:25px}
+.pst .pt:first-child{border-top:0}
+.pst .pt b{font:800 28px Lexend,Arial,sans-serif;color:#C2461A}
+.pst .pt small{display:block;font-size:22px;color:#6E5546}
+.pst .pr{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.pst .pr div{background:#fff;border-radius:22px;padding:18px 20px;border:2px solid #EED9C8;font-size:22px;color:#6E5546}
+.pst .pr b{display:block;font:800 36px Lexend,Arial,sans-serif;color:#C2461A}
+.pst .pr i{display:block;font-style:normal;color:#2A1A12;font-weight:700;font-size:24px}
+.pst .pwho{display:grid;grid-template-columns:1.6fr 1fr 1fr 1.2fr;gap:12px}
+.pst .pwho div{background:#fff;border:2px solid #EED9C8;border-radius:20px;padding:14px 20px}
+.pst .pwho span{display:block;font-size:20px;color:#6E5546}
+.pst .pwho b{display:block;font:800 32px Lexend,Arial,sans-serif;color:#2A1A12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pst h2{font:700 34px Lexend,Arial,sans-serif;margin:0}
+.pst .pft{margin-top:auto;font-size:20px;color:#6E5546;border-top:2px solid #EED9C8;padding-top:18px;display:flex;justify-content:space-between;gap:20px}
+@media (max-width:520px){.imgs{grid-template-columns:minmax(0,1fr)}}
 .chip{font-size:.82rem;font-weight:600;border-radius:999px;padding:4px 10px;background:var(--bg);border:1px solid var(--line)}
 .chip.ok{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
 .chip.need{background:var(--warn-soft);border-color:var(--warn);color:var(--warn)}
@@ -117,6 +175,12 @@ section{display:flex;flex-direction:column;gap:12px}
 .food .fn{font-weight:600}
 .food .fg{font:700 .95rem var(--display);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
 .food .fe{grid-column:1/-1;font-size:.84rem;color:var(--muted)}
+.vit{padding:10px 16px;border-top:1px solid var(--line);background:var(--ok-soft);display:flex;flex-direction:column;gap:6px}
+.vit>b{font:700 .85rem var(--display);color:var(--ok)}
+.vr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:baseline}
+.vn{font-weight:600;font-size:.9rem}
+.vd{grid-column:1/-1;font-size:.82rem;color:var(--muted)}
+.vr .st{font-size:.72rem;font-weight:700;border-radius:999px;padding:1px 7px}
 .mf{padding:9px 16px;border-top:1px solid var(--line);font-size:.84rem;color:var(--muted)}
 .hands{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .hand{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;gap:10px;align-items:flex-start;min-width:0}
@@ -169,8 +233,7 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 <body>
 <div class="wrap">
   <header class="no-print">
-    <a class="back" href="../">← Bảng tính calo</a>
-    <div class="brand" style="margin-top:10px">QUANG SLIMFIT COACH</div>
+    <div class="brand">QUANG SLIMFIT COACH</div>
     <h1>Lên giáo án cho khách hàng</h1>
     <p class="lead">Nhập thông tin khách, tick sản phẩm Nutrilite sẽ dùng và sản phẩm khách đã có. Trang tự lên thực đơn (có gram và cách ước lượng bằng tay), lịch dùng sản phẩm trong ngày và bảng theo dõi kết quả từng tuần.</p>
   </header>
@@ -226,20 +289,23 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
         <button type="button" class="sm alt" id="pick-none">Bỏ chọn hết</button>
       </div>
     </div>
-    <p class="hint" style="font-size:.88rem">Ô vuông bên trái: <b>dùng trong giáo án</b>. Nút bên phải: <b>khách đã có sẵn</b>. Gợi ý thay đổi theo mục tiêu, tuổi, giới tính và BMI của khách. Ô liều dùng có thể sửa theo nhãn sản phẩm.</p>
-    <div class="prods" id="prods"></div>
-    <div>
-      <div class="legend">Thêm sản phẩm khác</div>
-      <div class="addrow">
-        <label>Tên sản phẩm<input id="c-name" type="text" maxlength="50" placeholder="VD: Nutrilite ..."></label>
-        <label>Thời điểm dùng<select id="c-slot"></select></label>
-        <button type="button" class="sm" id="c-add">Thêm</button>
-      </div>
+    <div class="search">
+      <label class="legend" for="q">Tìm và thêm sản phẩm</label>
+      <input id="q" type="search" placeholder="Gõ tên, mã hàng hoặc công dụng: omega, canxi, bộ bodykey..." autocomplete="off">
+      <div class="results" id="results" hidden></div>
     </div>
+    <div class="sugg" id="suggest"></div>
+    <div>
+      <div class="legend">Sản phẩm trong giáo án · <span id="cnt">0</span></div>
+      <p class="hint" style="margin-bottom:8px">Bấm <b>Đã có</b> nếu khách có sẵn. Ô liều dùng sửa được.</p>
+      <div class="prods" id="prods"></div>
+    </div>
+    <details class="all"><summary>Xem tất cả sản phẩm Nutrilite (<span id="all-n"></span>)</summary><div class="prods" id="allp"></div></details>
   </div>
 
   <!-- 3. Giáo án -->
   <div id="out" style="display:flex;flex-direction:column;gap:22px">
+    <button type="button" class="no-print" id="go-dl" style="align-self:stretch">📥 Tải giáo án gửi khách</button>
     <div class="hero">
       <span class="tag" id="goal-tag">GIẢM CÂN</span>
       <div class="who" id="who"></div>
@@ -273,12 +339,12 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
     </section>
 
     <section>
-      <h2>Không có cân? Ước lượng bằng bàn tay</h2>
+      <h2>Quy đổi đơn vị</h2>
       <div class="hands">
-        <div class="hand"><span class="ic">✊</span><div><b>1 nắm tay = 100 g cơm, bún, khoai</b><span>Khoảng lưng 1 chén cơm (không nén). Trái cây: 1 nắm tay ≈ 150 g.</span></div></div>
-        <div class="hand"><span class="ic">🖐️</span><div><b>1 lòng bàn tay = 100 g thịt, cá</b><span>Rộng và dày bằng lòng bàn tay, không tính ngón. Tôm: 8–10 con vừa.</span></div></div>
-        <div class="hand"><span class="ic">🤲</span><div><b>2 nắm tay = 200 g rau</b><span>Khoảng 1 đĩa nhỏ rau luộc. Rau ăn bao nhiêu cũng được.</span></div></div>
-        <div class="hand"><span class="ic">👍</span><div><b>1 đầu ngón cái = 5 g dầu, mỡ</b><span>Bằng 1 muỗng cà phê. Hạt: 1 lòng bàn tay khum ≈ 15 g (10–12 hạt hạnh nhân).</span></div></div>
+        <div class="hand"><div><b>1 chén cơm = 120 g</b><span>Chén ăn cơm thường, đơm vừa, không nén. Bún cũng tính theo chén. 1 củ khoai lang vừa ≈ 150 g.</span></div></div>
+        <div class="hand"><div><b>1 miếng thịt, cá vừa = 100 g</b><span>1 bìa đậu phụ ≈ 150 g. Tôm: 9–10 con vừa ≈ 100 g. 1 quả trứng ≈ 50 g.</span></div></div>
+        <div class="hand"><div><b>1 đĩa rau = 200 g</b><span>Hoặc 1 tô canh rau. Rau ăn thêm bao nhiêu cũng được.</span></div></div>
+        <div class="hand"><div><b>1 muỗng cà phê dầu ô liu = 5 g</b><span>1 hộp sữa chua = 100 g. 1 hộp sữa tươi = 220 ml. 15 g hạt ≈ 12 hạt hạnh nhân.</span></div></div>
       </div>
     </section>
 
@@ -301,21 +367,33 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
       <div class="tablewrap"><table id="follow"></table></div>
     </section>
 
+    <section class="no-print">
+      <h2 id="dl">Tải giáo án gửi khách</h2>
+      <p class="note">Tạo 8 ảnh có họ tên, cân nặng và mục tiêu của khách: 1 ảnh tổng quan (calo, lịch dùng sản phẩm, kết quả dự kiến) và 7 ảnh thực đơn từng ngày kèm vitamin.</p>
+      <p class="note" id="save-how"></p>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" id="mk-img">Tạo ảnh giáo án</button><button type="button" class="alt" id="dl-all" hidden>Tải cả 8 ảnh</button></div>
+      <p class="note" id="img-msg" role="status"></p>
+      <div class="imgs" id="imgs"></div>
+    </section>
+
     <section>
       <h2>Kết hợp sao cho hiệu quả</h2>
       <ul class="tips" id="tips"></ul>
     </section>
 
     <div class="actions">
-      <button type="button" id="print">In / lưu PDF</button>
-      <button type="button" class="alt" id="share">Sao chép link</button>
+      <button type="button" id="share">Sao chép giáo án để gửi khách</button>
+      <button type="button" class="alt" id="reset">Khách mới (xóa dữ liệu)</button>
     </div>
     <p class="note" id="share-msg" role="status" style="margin-top:-10px;text-align:center"></p>
+    <textarea id="copybox" hidden rows="10" style="width:100%;font:.85rem var(--body);background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:10px;padding:10px"></textarea>
 
-    <p class="note">Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh. Vitamin và khoáng chất giúp bù vi chất khi ăn ít calo, còn cân nặng thay đổi chủ yếu nhờ ăn đúng lượng calo và vận động. Liều dùng luôn theo hướng dẫn trên nhãn. Số calo và kết quả là ước tính. Khách đang mang thai, cho con bú, có bệnh nền hoặc đang dùng thuốc cần hỏi ý kiến bác sĩ trước.</p>
+    <p class="note">Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh. Vitamin và khoáng chất giúp bù vi chất khi ăn ít calo, còn cân nặng thay đổi chủ yếu nhờ ăn đúng lượng calo và vận động. Số calo và kết quả là ước tính. Khách đang mang thai, cho con bú, có bệnh nền hoặc đang dùng thuốc cần hỏi ý kiến bác sĩ trước.</p>
   </div>
 </div>
 
+<div id="poster-host" aria-hidden="true"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script>
 const $=id=>document.getElementById(id);
 const radio=n=>document.querySelector(`input[name=${n}]:checked`).value;
@@ -341,43 +419,89 @@ const SLOTS={
 
 /* Sản phẩm Nutrilite. r: mức gợi ý theo mục tiêu (1 chủ lực, 2 nên dùng, 3 tùy chọn, 0 không gợi ý) */
 const PRODUCTS=[
-  {id:'bk',g:'Bữa sáng chủ lực',n:'BodyKey by Nutrilite (bữa ăn thay thế)',slots:['bf'],dose:'1 phần (theo muỗng trong hộp), pha 250 ml nước lọc hoặc sữa hạt không đường',
-    r:{cut:1,gain:0},why:{cut:'Thay bữa sáng: đủ đạm, xơ, vitamin mà ít calo, kiểm soát khẩu phần dễ.',gain:'Không cần khi tăng cân vì ít calo.'},nut:{kcal:200,p:15}},
-  {id:'pr',g:'Bữa sáng chủ lực',n:'Nutrilite All Plant Protein Powder (đạm thực vật)',slots:['bf'],dose:'1 muỗng (khoảng 10 g), pha chung với BodyKey',
-    r:{cut:1,gain:1},why:{cut:'Thêm đạm giúp no lâu và giữ cơ khi ăn ít calo.',gain:'Thêm đạm dễ uống để đủ lượng đạm cho tăng cơ.'},nut:{kcal:40,p:8}},
-  {id:'dx',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Double X',slots:['abf','alu','adi'],dose:'Theo nhãn, chia uống sau các bữa ăn',
+  {id:'bk',c:'124490 · 124492 · 124499',g:'Quản lý cân nặng',n:'BodyKey by Nutrilite (vị sô cô la, cà phê, trà sữa)',slots:['bf'],dose:'1 phần, pha 250 ml nước lọc hoặc sữa hạt không đường',
+    r:{cut:1,gain:0},why:{cut:'Mỗi phần 205 kcal, 17 g đạm thực vật (đậu nành, hạt chia), 5 g chất xơ, 22 vitamin và khoáng chất. Thay bữa sáng giúp no lâu mà kiểm soát được calo.',gain:'Không cần khi tăng cân vì ít calo.'},nut:{kcal:205,p:17}},
+  {id:'bkn',c:'315512',g:'Quản lý cân nặng',n:'BodyKey by Nutrilite Ngũ Cốc',slots:['bf'],dose:'1 phần',
+    r:{cut:0,gain:0},why:{cut:'BodyKey dạng ngũ cốc, dùng thay bữa sáng như BodyKey sữa. Calo và đạm trang đang tính theo số của BodyKey sữa, bạn sửa lại số nếu khác.',gain:'Không cần khi tăng cân.'}},
+  {id:'pr',c:'110415',g:'Quản lý cân nặng',n:'Nutrilite All Plant Protein Powder (đạm thực vật)',slots:['bf'],dose:'1 muỗng (khoảng 10 g), pha chung với BodyKey',
+    r:{cut:1,gain:1},why:{cut:'Bổ sung đạm thực vật, thêm vào bữa sáng giúp no lâu và giữ cơ khi ăn ít calo.',gain:'Thêm đạm dễ uống để đủ lượng đạm cho tăng cơ.'},nut:{kcal:40,p:8}},
+  {id:'gt',c:'117085',g:'Quản lý cân nặng',n:'Nutrilite GreenTrim',slots:['abf'],dose:'Sau bữa sáng',
+    r:{cut:3,gain:0},why:{cut:'Theo Amway: hỗ trợ giảm mỡ cơ thể và hỗ trợ chống oxy hóa. Có trong Bộ BodyKey Toàn Diện.',gain:'Không dùng khi tăng cân.'}},
+  {id:'cb',c:'103050',g:'Quản lý cân nặng',n:'Nutrilite CB Plus',slots:['lu','di'],dose:'Dùng với bữa có cơm, bún, khoai',
+    r:{cut:3,gain:0},why:{cut:'Theo Amway: hỗ trợ làm chậm chuyển hóa và hạn chế hấp thu chất bột đường từ thức ăn. Hợp với khách khó bớt cơm. Có trong Bộ BodyKey Toàn Diện.',gain:'Không dùng khi tăng cân.'}},
+  {id:'dx',c:'120843 · 120844',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Double X',slots:['abf','alu','adi'],dose:'2 viên sau mỗi bữa sáng, trưa, tối (6 viên/ngày)',
     r:{cut:3,gain:3},why:{cut:'Vitamin, khoáng chất và dưỡng chất thực vật liều cao. Chọn Double X hoặc Daily, không cần cả hai.',gain:'Bù vi chất đầy đủ. Chọn Double X hoặc Daily.'}},
-  {id:'da',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Daily (vitamin và khoáng chất tổng hợp)',slots:['abf'],dose:'Theo nhãn, sau bữa sáng',
+  {id:'da',c:'126009',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Daily (vitamin và khoáng chất tổng hợp)',slots:['abf'],dose:'1 viên sau bữa sáng',
     r:{cut:2,gain:2},why:{cut:'Ăn ít calo dễ thiếu vi chất. Một viên tổng hợp mỗi ngày giúp bù lại.',gain:'Bù vi chất nền tảng mỗi ngày.'}},
-  {id:'vb',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Vitamin B Dual-Action',slots:['abf'],dose:'Theo nhãn, sau bữa sáng',
+  {id:'vb',c:'110171',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Vitamin B Dual-Action',slots:['abf'],dose:'1 viên sau bữa sáng',
     r:{cut:2,gain:2},why:{cut:'Vitamin nhóm B tham gia chuyển hóa năng lượng, giúp đỡ mệt khi cắt giảm calo.',gain:'Hỗ trợ chuyển hóa năng lượng từ thức ăn.'}},
-  {id:'vc',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Vitamin C Extended Release',slots:['abf'],dose:'Theo nhãn, sau bữa sáng',
+  {id:'vc',c:'109745',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Vitamin C Extended Release',slots:['abf'],dose:'1 viên sau bữa sáng',
     r:{cut:3,gain:3},why:{cut:'Bù vitamin C khi ăn ít trái cây. Uống cùng lúc với sắt giúp hấp thu sắt tốt hơn.',gain:'Hỗ trợ sức đề kháng.'}},
-  {id:'om',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Advanced Triple Omega-3',slots:['alu'],dose:'Theo nhãn, sau bữa trưa (bữa có dầu mỡ, hấp thu tốt hơn)',
+  {id:'om',c:'126136',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Advanced Triple Omega-3',slots:['alu'],dose:'1–2 viên sau bữa trưa',
     r:{cut:2,gain:3},why:{cut:'Ăn ít dầu mỡ, ít cá béo thì nên bổ sung omega-3 tốt cho tim mạch.',gain:'Bổ sung chất béo tốt.'}},
-  {id:'fi',g:'Hỗ trợ chức năng',n:'Nutrilite Fiber Powder (chất xơ)',slots:['pdi'],dose:'Theo nhãn, pha với 200–300 ml nước',
-    r:{cut:2,gain:0},why:{cut:'Uống trước bữa tối giúp nhanh no, ăn ít lại. Hỗ trợ tiêu hóa khi ăn ít rau.',gain:'Không ưu tiên vì dễ no, khó ăn đủ.'}},
-  {id:'pb',g:'Hỗ trợ chức năng',n:'Nutrilite Probiotic (lợi khuẩn)',slots:['bed'],dose:'Theo nhãn',
-    r:{cut:3,gain:2},why:{cut:'Hỗ trợ tiêu hóa khi thay đổi chế độ ăn.',gain:'Tiêu hóa tốt thì ăn được nhiều và hấp thu tốt hơn.'}},
-  {id:'cm',g:'Hỗ trợ chức năng',n:'Nutrilite Cal Mag D (canxi, magie, vitamin D)',slots:['adi'],dose:'Theo nhãn, sau bữa tối (cách sắt ít nhất 2 giờ)',
+  {id:'prc',c:'117580',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Protein Powder vị sô cô la',slots:['bf'],dose:'1 muỗng',
+    r:{cut:0,gain:3},why:{cut:'Đạm đậu nành vị sô cô la, đủ 9 acid amin thiết yếu, dùng được cho trẻ từ 3 tuổi. Có thể thay All Plant Protein. Calo và đạm tính theo số của All Plant Protein, bạn sửa lại số nếu khác.',gain:'Thêm đạm, dễ uống.'}},
+  {id:'sp',c:'102578',g:'Dinh dưỡng thiết yếu',n:'Nutrilite Soy Protein Powder Mixed vị trà xanh',slots:['bf'],dose:'1 muỗng',
+    r:{cut:0,gain:3},why:{cut:'Đạm đậu nành vị trà xanh, đủ 9 acid amin thiết yếu. Có thể thay All Plant Protein. Calo và đạm tính theo số của All Plant Protein, bạn sửa lại số nếu khác.',gain:'Thêm đạm, dễ uống.'}},
+  {id:'fi',c:'102736',g:'Hỗ trợ chức năng',n:'Nutrilite Fiber Powder (chất xơ)',slots:['pdi'],dose:'Pha với 300 ml nước, uống trước bữa tối 15–30 phút',
+    r:{cut:2,gain:0},why:{cut:'Chất xơ hòa tan, hỗ trợ vi sinh đường ruột và nhuận tràng. Uống trước bữa tối giúp nhanh no, ăn ít lại.',gain:'Không ưu tiên vì dễ no, khó ăn đủ.'}},
+  {id:'pb',c:'120571',g:'Hỗ trợ chức năng',n:'Nutrilite Probiotic (lợi khuẩn)',slots:['bed'],dose:'Trước khi ngủ, không pha nước nóng',
+    r:{cut:3,gain:2},why:{cut:'Hỗ trợ cân bằng vi sinh đường ruột khi thay đổi chế độ ăn.',gain:'Tiêu hóa tốt thì ăn được nhiều và hấp thu tốt hơn.'}},
+  {id:'cm',c:'110610',g:'Hỗ trợ chức năng',n:'Nutrilite Cal Mag D (canxi, magie, vitamin D)',slots:['adi'],dose:'Sau bữa tối, cách sắt ít nhất 2 giờ',
     r:{cut:2,gain:3},why:{cut:'Giảm cân thường ăn ít sữa, nên dễ thiếu canxi. Bổ sung để giữ xương chắc.',gain:'Hỗ trợ xương khi tập luyện.'}},
-  {id:'fe',g:'Hỗ trợ chức năng',n:'Nutrilite Iron Folic (sắt, axit folic)',slots:['abf'],dose:'Theo nhãn, sau bữa sáng (cách canxi ít nhất 2 giờ)',
+  {id:'fe',c:'102046',g:'Hỗ trợ chức năng',n:'Nutrilite Iron Folic (sắt, axit folic)',slots:['abf'],dose:'1 viên sau bữa sáng, cách canxi ít nhất 2 giờ',
     r:{cut:3,gain:3},why:{cut:'Phụ nữ trong độ tuổi có kinh nguyệt dễ thiếu sắt, nhất là khi ăn ít thịt đỏ.',gain:'Dành cho người dễ thiếu sắt.'}},
-  {id:'zn',g:'Hỗ trợ chức năng',n:'Nutrilite Immunity Defense Zinc + Holy Basil',slots:['alu'],dose:'Theo nhãn, sau bữa trưa',
+  {id:'zn',c:'125394',g:'Hỗ trợ chức năng',n:'Nutrilite Immunity Defense Zinc + Holy Basil',slots:['alu'],dose:'1 viên sau bữa trưa',
     r:{cut:3,gain:3},why:{cut:'Bổ sung kẽm, hỗ trợ sức đề kháng khi ăn kiêng.',gain:'Bổ sung kẽm, hỗ trợ sức đề kháng.'}},
-  {id:'jh',g:'Hỗ trợ chức năng',n:'Nutrilite Joint Health',slots:['alu'],dose:'Theo nhãn, sau bữa trưa',
+  {id:'jh',c:'104664',g:'Hỗ trợ chức năng',n:'Nutrilite Joint Health',slots:['alu'],dose:'Sau bữa trưa',
     r:{cut:0,gain:0},why:{cut:'Hỗ trợ khớp, phù hợp khách nặng cân hoặc trên 40 tuổi khi bắt đầu vận động.',gain:'Hỗ trợ khớp khi tập nặng.'}},
-  {id:'lh',g:'Hỗ trợ chức năng',n:'Nutrilite Liver Health',slots:['adi'],dose:'Theo nhãn, sau bữa ăn',
+  {id:'lh',c:'808400',g:'Hỗ trợ chức năng',n:'Nutrilite Liver Health',slots:['adi'],dose:'Sau bữa tối',
     r:{cut:0,gain:0},why:{cut:'Dành cho khách hay uống rượu bia, ăn nhiều dầu mỡ trước đây.',gain:'Dành cho khách hay uống rượu bia.'}},
-  {id:'vh',g:'Hỗ trợ chức năng',n:'Nutrilite Vision Health Plus',slots:['alu'],dose:'Theo nhãn, sau bữa trưa',
+  {id:'vh',c:'124321',g:'Hỗ trợ chức năng',n:'Nutrilite Vision Health Plus',slots:['alu'],dose:'Sau bữa trưa',
     r:{cut:0,gain:0},why:{cut:'Hỗ trợ mắt, dành cho người dùng máy tính, điện thoại nhiều.',gain:'Hỗ trợ mắt.'}},
-  {id:'co',g:'Sản phẩm khác',n:'Nutrilite Heart Health CoQ10',slots:['alu'],dose:'Theo nhãn, sau bữa trưa',
+  {id:'co',c:'860100',g:'Hỗ trợ chức năng',n:'Nutrilite Heart Health CoQ10',slots:['alu'],dose:'1 viên sau bữa trưa',
     r:{cut:0,gain:0},why:{cut:'Hỗ trợ tim mạch, thường dùng cho người trên 40 tuổi.',gain:'Hỗ trợ tim mạch.'}},
-  {id:'ve',g:'Sản phẩm khác',n:'Nutrilite Vitamin E',slots:['alu'],dose:'Theo nhãn, sau bữa trưa',
+  {id:'ve',c:'426100',g:'Hỗ trợ chức năng',n:'Nutrilite Vitamin E',slots:['alu'],dose:'1 viên sau bữa trưa',
     r:{cut:0,gain:0},why:{cut:'Chống oxy hóa, hỗ trợ da.',gain:'Chống oxy hóa, hỗ trợ da.'}},
-  {id:'bc',g:'Sản phẩm khác',n:'Nutrilite Bio C Plus',slots:['abf'],dose:'Theo nhãn, sau bữa sáng',
-    r:{cut:0,gain:0},why:{cut:'Vitamin C. Đã chọn Vitamin C Extended Release thì không cần thêm.',gain:'Vitamin C.'}}
+  {id:'el',c:'118891',g:'Bổ sung hằng ngày',n:'Nutrilite PhytoPowder Electrolyte vị cam',slots:['s2'],dose:'Pha nước uống khi tập hoặc ra nhiều mồ hôi',
+    r:{cut:0,gain:0},why:{cut:'Bột uống bổ sung vitamin C, vitamin nhóm B, natri, kali. Hợp khi khách tập luyện, ra nhiều mồ hôi. Dùng từ 12 tuổi.',gain:'Bù điện giải khi tập luyện.'}},
+  {id:'col',c:'119293',g:'Bổ sung hằng ngày',n:'Nutrilite Mixed Collagen Peptide Drink',slots:['bed'],dose:'Buổi tối trước khi ngủ',
+    r:{cut:0,gain:0},why:{cut:'Collagen peptide từ cá biển, peptide đậu nành và chiết xuất hoa cúc. Dành cho người trưởng thành, hỗ trợ làm đẹp da.',gain:'Collagen peptide cho người trưởng thành.'}},
+  {id:'kd',c:'123043',g:'Trẻ em',n:'Nutrilite Kids Daily',slots:['abf'],dose:'Sau bữa sáng',
+    r:{cut:0,gain:0},why:{cut:'Vitamin tổng hợp cho trẻ em, không dùng trong giáo án người lớn.',gain:'Dành cho trẻ em.'}},
+  {id:'kci',c:'123046',g:'Trẻ em',n:'Nutrilite Kids Complete Immunity',slots:['abf'],dose:'Sau bữa sáng',
+    r:{cut:0,gain:0},why:{cut:'Dành cho trẻ em: lợi khuẩn, vitamin C, D và kẽm.',gain:'Dành cho trẻ em.'}},
+  {id:'kom',c:'300920',g:'Trẻ em',n:'Nutrilite Nutrikids Omega-3 Jelly',slots:['alu'],dose:'Sau bữa trưa',
+    r:{cut:0,gain:0},why:{cut:'Thạch omega-3 cho trẻ em.',gain:'Thạch omega-3 cho trẻ em.'}}
 ];
+/* Bộ sản phẩm trên amway.com.vn: bấm là thêm các sản phẩm trong bộ */
+const SETS=[
+  {id:'s-bkd',c:'320839',n:'Bộ BodyKey Dễ Dàng',items:['fi','pr','bk'],note:'Fiber Powder, Protein (chọn 2), BodyKey (chọn 1)'},
+  {id:'s-bkc',c:'325814',n:'Bộ BodyKey Cơ Bản',items:['fi','dx','om','pr','bk'],note:'Fiber Powder x2, Double X, Omega-3, Protein (chọn 2), BodyKey (chọn 2)'},
+  {id:'s-bkt',c:'325815',n:'Bộ BodyKey Toàn Diện',items:['fi','cb','gt','dx','om','pr','bk'],note:'Fiber Powder x4, CB Plus, GreenTrim, Double X, Omega-3, Protein (chọn 4), BodyKey (chọn 4)'},
+  {id:'s-nt',c:'304041',n:'Bộ Dinh Dưỡng Nền Tảng',items:['pr','om','dx'],note:'All Plant Protein, Omega-3, Double X'},
+  {id:'s-dk',c:'303418',n:'Bộ Dinh Dưỡng Hỗ Trợ Đề Kháng',items:['dx','pb'],note:'Double X, Probiotic'},
+  {id:'s-th',c:'303419',n:'Bộ Dinh Dưỡng Hỗ Trợ Tiêu Hóa',items:['pb','fi'],note:'Probiotic, Fiber Powder'},
+  {id:'s-tm',c:'303417',n:'Bộ Dinh Dưỡng Hỗ Trợ Tim Mạch',items:['ve','om','co'],note:'Vitamin E, Omega-3, CoQ10'},
+  {id:'s-xk',c:'304040',n:'Bộ Dinh Dưỡng Hỗ Trợ Xương Khớp',items:['jh','cm','om'],note:'Joint Health, Cal Mag D, Omega-3'},
+  {id:'s-nam',c:'304042',n:'Bộ Dinh Dưỡng Chăm Sóc Sức Khỏe Nam Giới',items:['vb','co','lh'],note:'Vitamin B, CoQ10, Liver Health'},
+  {id:'s-nu',c:'304043',n:'Bộ Dinh Dưỡng Hỗ Trợ Sức Khỏe Phụ Nữ',items:['ve','cm','fe'],note:'Vitamin E, Cal Mag D, Iron Folic'},
+  {id:'s-lt',c:'304044',n:'Bộ Dinh Dưỡng Chăm Sóc Người Lớn Tuổi',items:['vb','cm','om'],note:'Vitamin B, Cal Mag D, Omega-3'},
+  {id:'s-te',c:'320849',n:'Bộ Dinh Dưỡng Nền Tảng Trẻ Em',items:['kd','kom','prc'],note:'Kids Daily, Nutrikids Omega-3 Jelly, Protein vị sô cô la'}
+];
+/* Sản phẩm thay thế nhau trong bữa sáng */
+const ALIAS={bkn:'bk',prc:'pr',sp:'pr'};
+const hasAny=(set,id)=>set.has(id)||Object.entries(ALIAS).some(([k,v])=>v===id&&set.has(k));
+const bkLabel=set=>set.has('bk')?'BodyKey':'BodyKey Ngũ Cốc';
+const prLabel=set=>set.has('pr')?'All Plant Protein':set.has('prc')?'Protein vị sô cô la':'Soy Protein trà xanh';
+/* Từ khóa tìm kiếm không dấu */
+const KW={bk:'bodykey thay bua an kieng giam can shake sua lac socola ca phe tra sua',bkn:'bodykey ngu coc thay bua giam can',pr:'dam protein thuc vat dau nanh dau ha lan bot all plant',
+  gt:'greentrim green trim giam mo',cb:'cb plus tinh bot duong carb com chan hap thu',dx:'double x vitamin tong hop khoang chat',da:'daily vitamin tong hop multi khoang chat',
+  vb:'vitamin b nhom b nang luong met',vc:'vitamin c de khang extended release',om:'omega 3 ca dau ca tim mach mo',prc:'dam protein socola dau nanh tre em',sp:'dam protein dau nanh soy tra xanh',
+  fi:'xo chat xo fiber tieu hoa tao bon no lau',pb:'loi khuan men vi sinh probiotic tieu hoa duong ruot',cm:'canxi calcium magie vitamin d xuong',fe:'sat folic thieu mau bau kinh nguyet',
+  zn:'kem zinc hung que de khang mien dich holy basil',jh:'khop xuong glucosamine dau goi joint',lh:'gan liver ruou bia giai doc',vh:'mat thi luc vision lutein',co:'tim coq10 q10 tim mach heart',
+  ve:'vitamin e da chong oxy hoa',el:'dien giai electrolyte phytopowder cam the thao tap mo hoi',col:'collagen da dep peptide',kd:'tre em kids daily vitamin',kci:'tre em kids mien dich de khang',kom:'tre em omega thach jelly'};
+const norm=t=>String(t).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d').replace(/Đ/g,'d').toLowerCase();
 
 /* Gợi ý điều chỉnh theo từng khách */
 function recLevel(p,c){
@@ -403,7 +527,7 @@ const FOOD={
   dau:{n:'Đậu phụ sốt cà chua',k:90,p:9,v:'tofu'},
   trung:{n:'Trứng gà luộc',k:140,p:12,v:'egg'},
   veg:{n:'Rau',k:25,p:2,v:'veg'},
-  oil:{n:'Dầu ăn để nấu',k:900,p:0,v:'oil'},
+  oil:{n:'Dầu ô liu (nấu hoặc trộn rau)',k:884,p:0,v:'oil'},
   fruit:{n:'Trái cây',k:50,p:.8,v:'fruit'},
   yog:{n:'Sữa chua không đường',k:60,p:3.5,v:'yog'},
   nut:{n:'Hạt hạnh nhân hoặc óc chó',k:580,p:20,v:'nut'},
@@ -413,22 +537,28 @@ const FOOD={
   banana:{n:'Chuối',k:90,p:1.1,v:'fruit'},
   pb:{n:'Bơ đậu phộng',k:590,p:25,v:'nut'}
 };
-function eye(v,g){
-  const half=x=>{const r=Math.round(x*2)/2;return r<=0?'nửa':dec(r)};
+/* Quy đổi gram sang đơn vị quen thuộc: chén, miếng, hộp, quả... */
+function amt(x,unit){const r=Math.max(Math.round(x*2)/2,.5);
+  if(r===.5) return 'nửa '+unit;
+  return r%1?`${Math.floor(r)} ${unit.replace(' vừa','')} rưỡi`:`${r} ${unit}`;}
+const FRUIT={'Ổi':[150,'quả vừa'],'Táo':[150,'quả vừa'],'Cam':[150,'quả vừa'],'Lê':[150,'quả vừa'],'Thanh long':[300,'quả'],'Bưởi':[50,'múi'],'Đu đủ':[150,'chén']};
+function eye(v,g,name){
+  name=name||'';
   switch(v){
-    case 'carb':return `${half(g/100)} nắm tay (khoảng ${g<=110?'lưng 1 chén':half(g/100)+' chén lưng'})`;
-    case 'meat':return `${half(g/100)} lòng bàn tay`;
-    case 'shrimp':return `khoảng ${Math.round(g/11)} con tôm vừa`;
-    case 'tofu':return `${half(g/100)} lòng bàn tay (khoảng ${half(g/150)} bìa đậu)`;
+    case 'carb':return name.startsWith('Khoai')?amt(g/150,'củ vừa'):amt(g/120,'chén');
+    case 'meat':return amt(g/100,'miếng vừa');
+    case 'shrimp':return `khoảng ${Math.round(g/11)} con vừa`;
+    case 'tofu':return amt(g/150,'bìa đậu');
     case 'egg':return `${Math.round(g/50)} quả`;
-    case 'veg':return `${half(g/100)} nắm tay, ăn thêm thoải mái`;
-    case 'oil':return `${Math.round(g/5)} đầu ngón cái (${Math.round(g/5)} muỗng cà phê)`;
-    case 'fruit':return `${half(g/150)} nắm tay`;
-    case 'yog':return `${half(g/100)} hộp`;
-    case 'nut':return `${half(g/15)} lòng bàn tay khum`;
-    case 'milk':return `${half(g/220)} hộp hoặc ly ${g} ml`;
-    case 'bread':return `${half(g/80)} ổ bánh mì vừa`;
-    case 'oat':return `${Math.round(g/10)} muỗng canh yến mạch khô`;
+    case 'veg':return /^Canh/.test(name)?'1 tô canh':amt(g/200,'đĩa');
+    case 'oil':return amt(g/5,'muỗng cà phê');
+    case 'fruit':{if(name==='Chuối')return amt(g/120,'quả');const f=FRUIT[name];if(!f)return amt(g/150,'chén');
+      return f[1]==='múi'?`${Math.round(g/f[0])} múi`:amt(g/f[0],f[1]);}
+    case 'yog':return amt(g/100,'hộp');
+    case 'nut':return `${Math.round(g*0.8)} hạt`;
+    case 'milk':return amt(g/220,'hộp');
+    case 'bread':return amt(g/80,'ổ');
+    case 'oat':return `${Math.round(g/10)} muỗng canh`;
     default:return '';
   }
 }
@@ -442,7 +572,7 @@ const MENU={
   luC:['rice','brown','bun','rice','brown','rice','bun'],
   diP:['dau','tom','ca','ga','dau','heo','ca'],
   diC:['khoai','brown','khoai','brown','khoai','brown','khoai'],
-  luV:['Rau muống luộc','Bông cải xanh hấp','Rau sống, dưa leo, giá','Cải thìa xào ít dầu','Canh bí xanh','Canh rau ngót','Rau sống, xà lách'],
+  luV:['Rau muống luộc','Bông cải xanh hấp','Rau sống, dưa leo, giá','Cải thìa xào dầu ô liu','Canh bí xanh','Canh rau ngót','Rau sống, xà lách'],
   diV:['Canh cải bẹ xanh','Mướp, bầu luộc','Salad dưa leo cà chua','Canh rau dền','Su su, cà rốt luộc','Đậu que luộc','Canh mồng tơi'],
   fr:['Ổi','Táo','Thanh long','Cam','Bưởi','Đu đủ','Lê'],
   gainBf:[['bread',80,'Bánh mì'],['oat',60,'Yến mạch']]
@@ -459,12 +589,12 @@ function mainMeal(budget,pid,cid,protTarget,oilG,minCarb){
 
 function buildDay(d,c,P){
   const meals=[];
-  const usePr=P.use.has('pr'),useBk=P.use.has('bk');
+  const usePr=hasAny(P.use,'pr'),useBk=hasAny(P.use,'bk');
   const prN=P.nut.pr,bkN=P.nut.bk;
   const shake=(extra)=>{
     const its=[];
-    if(useBk) its.push({custom:true,n:'BodyKey',g:'1 phần',e:'Theo muỗng đong trong hộp',k:bkN.kcal,p:bkN.p});
-    if(usePr) its.push({custom:true,n:'All Plant Protein',g:'1 muỗng',e:'Khoảng 10 g, pha chung',k:prN.kcal,p:prN.p});
+    if(useBk) its.push({custom:true,n:bkLabel(P.use),g:'1 phần',e:'Theo muỗng đong trong hộp',k:bkN.kcal,p:bkN.p});
+    if(usePr) its.push({custom:true,n:prLabel(P.use),g:'1 muỗng',e:'Khoảng 10 g, pha chung',k:prN.kcal,p:prN.p});
     its.push({custom:true,n:'Nước lọc hoặc sữa hạt không đường',g:'250 ml',e:'1 ly vừa. Lắc đều, uống chậm trong 10–15 phút',k:0,p:0});
     return its.concat(extra||[]);
   };
@@ -493,10 +623,10 @@ function buildDay(d,c,P){
   }else{
     const [bid,bg,bn]=MENU.gainBf[d%2];
     const bf=[item(bid,bg),item('trung',100),item('milk',220)];
-    if(usePr) bf.push({custom:true,n:'All Plant Protein',g:'1 muỗng',e:'Khoảng 10 g, pha vào sữa',k:prN.kcal,p:prN.p});
+    if(usePr) bf.push({custom:true,n:prLabel(P.use),g:'1 muỗng',e:'Khoảng 10 g, pha vào sữa',k:prN.kcal,p:prN.p});
     meals.push({slot:'bf',its:bf});
     const s1=[item('banana',120),item('milk',220)];
-    if(usePr) s1.push({custom:true,n:'All Plant Protein',g:'1 muỗng',e:'Pha chung với sữa thành sinh tố',k:prN.kcal,p:prN.p});
+    if(usePr) s1.push({custom:true,n:prLabel(P.use),g:'1 muỗng',e:'Pha chung với sữa thành sinh tố',k:prN.kcal,p:prN.p});
     meals.push({slot:'s1',its:s1});
     meals.push({slot:'s2',its:[item('yog',100),item('nut',30),Object.assign(item('fruit',150),{name:MENU.fr[d]})]});
     const fixed=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+(i.custom?i.k:kcalOf(i)),0),0);
@@ -512,7 +642,7 @@ function buildDay(d,c,P){
 }
 
 /* Trạng thái */
-const state={use:new Set(),have:new Set(),dose:{},nut:{bk:{kcal:200,p:15},pr:{kcal:40,p:8}},custom:[],fw:[],fe:[],touched:false};
+const state={use:new Set(),have:new Set(),dose:{},nut:{bk:{kcal:205,p:17},pr:{kcal:40,p:8}},custom:[],fw:[],fe:[],touched:false};
 
 function client(){
   const c={sex:radio('sex'),goal:radio('goal'),shakes:+radio('shakes'),age:+$('age').value,h:+$('h').value,w:+$('w').value,tw:+$('tw').value,
@@ -554,35 +684,68 @@ function predict(c,k){
 }
 
 /* Danh sách sản phẩm */
+const BADGE=lv=>lv===1?'<span class="badge b1">CHỦ LỰC</span>':lv===2?'<span class="badge b2">NÊN DÙNG</span>':lv===3?'<span class="badge b3">TÙY CHỌN</span>':'';
+const slotNames=p=>p.slots.map(x=>SLOTS[x].t+' '+SLOTS[x].n.toLowerCase()).join(', ');
+let lastC={};
 function renderProducts(c){
-  let html='',g='';
-  PRODUCTS.forEach(p=>{
-    if(p.g!==g){g=p.g;html+=`<div class="grp">${g.toUpperCase()}</div>`;}
+  lastC=c;
+  const goal=c.goal||'cut';
+  // Đã chọn
+  let html='';
+  PRODUCTS.filter(p=>state.use.has(p.id)).forEach(p=>{
     const lv=c.ok?recLevel(p,c):0;
-    const badge=lv===1?'<span class="badge b1">CHỦ LỰC</span>':lv===2?'<span class="badge b2">NÊN DÙNG</span>':lv===3?'<span class="badge b3">TÙY CHỌN</span>':'';
-    const on=state.use.has(p.id);
     const nut=p.nut?`<div class="nut"><label>kcal mỗi ${p.id==='bk'?'phần':'muỗng'}<input type="number" data-nut="${p.id}" data-k="kcal" value="${state.nut[p.id].kcal}" min="0" max="600"></label><label>Gram đạm<input type="number" data-nut="${p.id}" data-k="p" value="${state.nut[p.id].p}" min="0" max="60"></label></div>`:'';
-    html+=`<div class="prod${on?' on':''}">
-      <input type="checkbox" data-use="${p.id}" ${on?'checked':''} aria-label="Dùng ${esc(p.n)} trong giáo án">
-      <div><div class="nm">${esc(p.n)}${badge}</div><div class="why">${esc(p.why[c.goal||'cut'])}</div></div>
+    html+=`<div class="prod on">
+      <button type="button" class="x" data-del="${p.id}" aria-label="Bỏ ${esc(p.n)}">×</button>
+      <div><div class="nm">${esc(p.n)}${BADGE(lv)}</div><div class="why">Mã ${p.c}</div></div>
       <label class="have"><input type="checkbox" data-have="${p.id}" ${state.have.has(p.id)?'checked':''}>Đã có</label>
-      ${on?`<div class="dose"><input type="text" data-dose="${p.id}" value="${esc(state.dose[p.id]??p.dose)}" aria-label="Liều dùng ${esc(p.n)}">${nut}</div>`:''}
+      <div class="dose"><input type="text" data-dose="${p.id}" value="${esc(state.dose[p.id]??p.dose)}" aria-label="Liều dùng ${esc(p.n)}">${nut}</div>
     </div>`;
   });
-  if(state.custom.length){
-    html+=`<div class="grp">SẢN PHẨM THÊM</div>`;
-    state.custom.forEach((cu,i)=>{
-      html+=`<div class="prod on"><input type="checkbox" checked data-cdel="${i}" aria-label="Bỏ ${esc(cu.n)}">
-        <div><div class="nm">${esc(cu.n)}</div><div class="why">${esc(SLOTS[cu.s].n)} · bỏ tick để xóa</div></div>
-        <label class="have"><input type="checkbox" data-chave="${i}" ${cu.h?'checked':''}>Đã có</label></div>`;
-    });
-  }
-  $('prods').innerHTML=html;
+  state.custom.forEach((cu,i)=>{
+    html+=`<div class="prod on"><button type="button" class="x" data-cdel="${i}" aria-label="Bỏ ${esc(cu.n)}">×</button>
+      <div><div class="nm">${esc(cu.n)}</div><div class="why">Sản phẩm tự thêm · ${esc(SLOTS[cu.s].t+' '+SLOTS[cu.s].n.toLowerCase())}</div></div>
+      <label class="have"><input type="checkbox" data-chave="${i}" ${cu.h?'checked':''}>Đã có</label></div>`;
+  });
+  $('prods').innerHTML=html||'<div class="empty">Chưa có sản phẩm nào. Gõ tên vào ô tìm kiếm hoặc bấm gợi ý bên trên.</div>';
+  $('cnt').textContent=PRODUCTS.filter(p=>state.use.has(p.id)).length+state.custom.length+' sản phẩm';
+  // Gợi ý chưa chọn
+  const sug=c.ok?PRODUCTS.filter(p=>!state.use.has(p.id)&&[1,2].includes(recLevel(p,c))&&!(p.id==='dx'&&state.use.has('da'))&&!(p.id==='da'&&state.use.has('dx'))):[];
+  $('suggest').innerHTML=sug.length?'<span class="hint">Gợi ý thêm:</span>'+sug.map(p=>`<button type="button" data-add="${p.id}">+ ${esc(p.n.replace('Nutrilite ',''))}</button>`).join(''):'';
+  // Tất cả
+  let all='',g='';
+  PRODUCTS.forEach(p=>{
+    if(p.g!==g){g=p.g;all+=`<div class="grp">${g.toUpperCase()}</div>`;}
+    const on=state.use.has(p.id);
+    all+=`<div class="prod${on?' on':''}"><input type="checkbox" data-use="${p.id}" ${on?'checked':''} aria-label="Dùng ${esc(p.n)}">
+      <div><div class="nm">${esc(p.n)}${BADGE(c.ok?recLevel(p,c):0)}</div><div class="why">Mã ${p.c} · ${esc(p.why[goal])}</div></div><span></span></div>`;
+  });
+  all+=`<div class="grp">BỘ SẢN PHẨM (BẤM ĐỂ THÊM CẢ BỘ)</div>`+SETS.map(st=>setRow(st)).join('');
+  $('allp').innerHTML=all;$('all-n').textContent=PRODUCTS.length+' sản phẩm, '+SETS.length+' bộ';
+  renderResults();
+}
+function setRow(st){
+  const done=st.items.every(id=>hasAny(state.use,id));
+  return `<button type="button" class="res${done?' added':''}" data-set="${st.id}"><span>${esc(st.n)}<small>Mã ${st.c} · ${esc(st.note)}</small></span><b>${done?'✓ Đã thêm':'+ Thêm cả bộ'}</b></button>`;
+}
+function renderResults(){
+  const q=$('q').value.trim(),box=$('results');
+  if(!q){box.hidden=true;box.innerHTML='';return;}
+  const toks=norm(q).split(/\s+/).filter(Boolean);
+  const hits=PRODUCTS.filter(p=>{const t=norm(p.n+' '+p.c+' '+(KW[p.id]||''));return toks.every(k=>t.includes(k))}).slice(0,8);
+  const sets=SETS.filter(st=>{const t=norm(st.n+' '+st.c+' bo combo '+st.note);return toks.every(k=>t.includes(k))}).slice(0,4);
+  const goal=lastC.goal||'cut';
+  let h=hits.map(p=>{const on=state.use.has(p.id);
+    return `<button type="button" class="res${on?' added':''}" data-add="${p.id}"><span>${esc(p.n)}${lastC.ok?BADGE(recLevel(p,lastC)):''}<small>Mã ${p.c} · ${esc(p.why[goal])}</small></span><b>${on?'✓ Đã thêm':'+ Thêm'}</b></button>`}).join('')+sets.map(setRow).join('');
+  h+=`<div class="addnew"><p>${hits.length||sets.length?'Không thấy sản phẩm cần tìm?':'Không tìm thấy.'} Thêm “${esc(q)}” làm sản phẩm mới:</p>
+    <select id="c-slot" aria-label="Thời điểm dùng">${Object.entries(SLOTS).filter(([k])=>!['bf','s1','lu','s2','di'].includes(k)).map(([k,v])=>`<option value="${k}">${v.t} · ${v.n}</option>`).join('')}</select>
+    <button type="button" class="sm" data-cadd="1">Thêm</button></div>`;
+  box.innerHTML=h;box.hidden=false;
 }
 
 function selectedList(){
   const list=PRODUCTS.filter(p=>state.use.has(p.id)).map(p=>({id:p.id,n:p.n,slots:p.slots,dose:state.dose[p.id]??p.dose,have:state.have.has(p.id)}));
-  state.custom.forEach((cu,i)=>list.push({id:'c'+i,n:cu.n,slots:[cu.s],dose:'Theo nhãn',have:!!cu.h}));
+  state.custom.forEach((cu,i)=>list.push({id:'c'+i,n:cu.n,slots:[cu.s],dose:'',have:!!cu.h}));
   return list;
 }
 
@@ -619,35 +782,43 @@ function render(){
   const days=DAYS.map((_,d)=>buildDay(d,c,P));
   const kOf=i=>i.custom?i.k:kcalOf(i), pOf=i=>i.custom?i.p:protOf(i);
   $('tabs').innerHTML=DAYS.map((d,i)=>`<button type="button" role="tab" aria-selected="${i===curDay}" data-day="${i}">${d}</button>`).join('');
+  const bySlot={};
+  sel.forEach(s=>s.slots.forEach(sl=>(bySlot[sl]=bySlot[sl]||[]).push(s)));
+  const SHAKE=['bk','bkn','pr','prc','sp'];
+  const vitRows=(list,label)=>list&&list.length?`<div class="vit"><b>💊 ${label}</b>${list.map(v=>`<div class="vr"><span class="vn">${esc(v.n)}</span>${v.dose?`<span class="vd">${esc(v.dose)}</span>`:''}</div>`).join('')}</div>`:'';
+  const vitCard=sl=>bySlot[sl]?`<div class="meal-card"><div class="mh"><b>${SLOTS[sl].t} · ${SLOTS[sl].n}</b><span>Sản phẩm</span></div>${vitRows(bySlot[sl],'Uống')}</div>`:'';
+  const AFTER={bf:'abf',lu:'alu',di:'adi'};
   $('days').innerHTML=days.map((meals,d)=>{
     const tk=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+kOf(i),0),0),tp=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+pOf(i),0),0);
-    return `<div class="day" ${d===curDay?'':'hidden'}><h3 class="day-title">${DAYS[d]}</h3>${meals.map(m=>{
+    return `<div class="day" ${d===curDay?'':'hidden'}><h3 class="day-title">${DAYS[d]}</h3>${vitCard('wake')}${meals.map(m=>{
       const mk=m.its.reduce((a,i)=>a+kOf(i),0),mp=m.its.reduce((a,i)=>a+pOf(i),0);
       const rows=m.its.map(i=>i.custom?`<div class="food"><span class="fn">${esc(i.n)}</span><span class="fg">${i.g}</span><span class="fe">${i.e}</span></div>`:
-        `<div class="food"><span class="fn">${i.name||i.f.n}</span><span class="fg">${i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g'}</span><span class="fe">Bằng mắt: ${eye(i.f.v,i.g)}</span></div>`).join('');
-      const tip=m.slot==='lu'||m.slot==='di'?'<div class="mf">Ăn rau trước, rồi đến thịt cá, cuối cùng là tinh bột. Nấu hấp, luộc hoặc áp chảo ít dầu.</div>':'';
-      return `<div class="meal-card"><div class="mh"><b>${SLOTS[m.slot].t} · ${SLOTS[m.slot].n}</b><span>~${fmt(r10(mk))} kcal · ${Math.round(mp)} g đạm</span></div>${rows}${tip}</div>`;
-    }).join('')}<p class="note">Tổng ngày: khoảng ${fmt(r10(tk))} kcal, ${Math.round(tp)} g đạm. Có thể đổi món giữa các ngày, giữ nguyên số gram.</p></div>`;
+        `<div class="food"><span class="fn">${i.name||i.f.n}</span><span class="fg">${i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g'}</span><span class="fe">${eye(i.f.v,i.g,i.name||i.f.n)}</span></div>`).join('');
+      const tip=m.slot==='lu'||m.slot==='di'?'<div class="mf">Ăn rau trước, rồi đến thịt cá, cuối cùng là tinh bột. Nấu hấp, luộc hoặc áp chảo với dầu ô liu, dùng đúng lượng dầu ghi trong thực đơn.</div>':'';
+      const own=(bySlot[m.slot]||[]).filter(v=>!SHAKE.includes(v.id));
+      const pre=m.slot==='di'?vitCard('pdi'):'';
+      return `${pre}<div class="meal-card"><div class="mh"><b>${SLOTS[m.slot].t} · ${SLOTS[m.slot].n}</b><span>~${fmt(r10(mk))} kcal · ${Math.round(mp)} g đạm</span></div>${rows}${vitRows(own,'Dùng kèm trong bữa')}${vitRows(bySlot[AFTER[m.slot]],'Sau bữa uống ('+(SLOTS[AFTER[m.slot]]||{}).t+')')}${tip}</div>`;
+    }).join('')}${vitCard('bed')}<p class="note">Tổng ngày: khoảng ${fmt(r10(tk))} kcal, ${Math.round(tp)} g đạm. Có thể đổi món giữa các ngày, giữ nguyên số gram.</p></div>`;
   }).join('');
 
   // Lịch trong ngày
-  const bySlot={};
-  sel.forEach(s=>s.slots.forEach(sl=>(bySlot[sl]=bySlot[sl]||[]).push(s)));
   const meal0=days[0];
   const mealText=sl=>{const m=meal0.find(x=>x.slot===sl);if(!m)return '';
-    if(sl==='bf'&&c.goal==='cut'&&(state.use.has('bk')||state.use.has('pr'))) return 'Lắc '+[state.use.has('bk')&&'BodyKey',state.use.has('pr')&&'Protein'].filter(Boolean).join(' + ')+' với 250 ml nước. Xem gram ở thực đơn.';
-    if(sl==='di'&&c.goal==='cut'&&c.shakes===2&&state.use.has('bk')) return 'BodyKey'+(state.use.has('pr')?' + Protein':'')+' và 1 đĩa rau luộc.';
+    if(sl==='bf'&&c.goal==='cut'&&(hasAny(state.use,'bk')||hasAny(state.use,'pr'))) return 'Lắc '+[hasAny(state.use,'bk')&&bkLabel(state.use),hasAny(state.use,'pr')&&prLabel(state.use)].filter(Boolean).join(' + ')+' với 250 ml nước. Xem gram ở thực đơn.';
+    if(sl==='di'&&c.goal==='cut'&&c.shakes===2&&hasAny(state.use,'bk')) return bkLabel(state.use)+(hasAny(state.use,'pr')?' + Protein':'')+' và 1 đĩa rau luộc.';
     return m.its.filter(i=>!i.custom&&i.f.v!=='oil').map(i=>(i.name||i.f.n).split(' (')[0]+' '+(i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g')).join(' · ')+' (thực đơn Thứ 2)';};
   const slotOrder=['wake','bf','abf','s1','lu','alu','s2','pdi','di','adi','bed'];
   const extra={wake:'Uống 1–2 ly nước ấm (300–500 ml).',bed:'Ngủ trước 23:00, đủ 7–8 tiếng.',pdi:'Uống 1 ly nước lớn.'};
   $('timeline').innerHTML=slotOrder.filter(sl=>bySlot[sl]||['bf','s1','lu','s2','di','wake','bed'].includes(sl)).map(sl=>{
     const isMeal=['bf','s1','lu','s2','di'].includes(sl);
     const prods=(bySlot[sl]||[]).filter(s=>!(isMeal&&(s.id==='bk'||s.id==='pr')&&sl==='bf'&&c.goal==='cut'&&false));
-    const li=prods.map(s=>`<li><span>💊 <b>${esc(s.n)}</b> · ${esc(s.dose)}</span><span class="st ${s.have?'ok':'need'}">${s.have?'Đã có':'Cần mua'}</span></li>`).join('');
+    const li=prods.map(s=>`<li><span>💊 <b>${esc(s.n)}</b>${s.dose?' · '+esc(s.dose):''}</span></li>`).join('');
     const txt=isMeal?mealText(sl):(extra[sl]||'');
     return `<div class="tl${isMeal?' meal':''}"><span class="tm">${SLOTS[sl].t}</span><div><div class="what">${SLOTS[sl].n}</div>${txt?`<div class="note">${txt}</div>`:''}${li?`<ul>${li}</ul>`:''}</div></div>`;
   }).join('');
 
+  LAST={c,days,sel,bySlot};
+  if($('imgs').childElementCount){$('imgs').innerHTML='';$('dl-all').hidden=true;$('img-msg').textContent='Thông tin vừa thay đổi. Bấm "Tạo ảnh giáo án" để tạo lại ảnh mới.';}
   renderResult(c);
   renderFollow(c);
   renderTips(c,sel);
@@ -740,18 +911,20 @@ function renderChart(c,n){
 }
 
 function renderTips(c,sel){
-  const has=id=>sel.some(s=>s.id===id);
+  const has=id=>sel.some(s=>s.id===id||ALIAS[s.id]===id);
   const t=[];
   if(c.goal==='cut'){
     if(has('bk')) t.push('<b>BodyKey + Protein buổi sáng</b> là bữa chủ lực: đủ đạm (khoảng '+Math.round(state.nut.bk.p+(has('pr')?state.nut.pr.p:0))+' g) mà chỉ khoảng '+fmt(state.nut.bk.kcal+(has('pr')?state.nut.pr.kcal:0))+' kcal, giúp no tới trưa. Uống chậm trong 10–15 phút, không uống vội.');
     if(!has('bk')) t.push('Chưa chọn BodyKey: bữa sáng đang dùng trứng và bánh mì. Thêm BodyKey giúp kiểm soát calo bữa sáng dễ hơn.');
   }else if(has('pr')) t.push('<b>Protein</b> pha vào sữa ở bữa sáng và bữa phụ để thêm đạm mà không phải ăn thêm nhiều.');
+  if(has('cb')) t.push('<b>CB Plus</b> dùng ở bữa trưa và bữa tối, là các bữa có cơm, bún, khoai. Vẫn giữ đúng số gram tinh bột trong thực đơn.');
+  if(has('gt')) t.push('<b>GreenTrim</b> dùng kèm chế độ ăn và vận động trong giáo án. Sản phẩm chỉ hỗ trợ, cân giảm chủ yếu nhờ thâm hụt calo.');
   if(has('dx')&&has('da')) t.push('⚠️ Đang chọn cả Double X và Daily. Cả hai đều là vitamin tổng hợp, chỉ nên chọn một.');
-  if(has('vc')&&has('bc')) t.push('⚠️ Đang chọn cả Vitamin C Extended Release và Bio C Plus. Chỉ cần một loại vitamin C.');
   if(has('fe')&&has('cm')) t.push('<b>Sắt và canxi uống cách nhau ít nhất 2 giờ</b> vì canxi làm giảm hấp thu sắt: Iron Folic sau ăn sáng, Cal Mag D sau ăn tối.');
-  if(has('fe')&&(has('vc')||has('bc'))) t.push('Uống Iron Folic cùng vitamin C sau bữa sáng giúp hấp thu sắt tốt hơn. Không uống sắt cùng trà, cà phê.');
+  if(has('fe')&&has('vc')) t.push('Uống Iron Folic cùng vitamin C sau bữa sáng giúp hấp thu sắt tốt hơn. Không uống sắt cùng trà, cà phê.');
   if(has('fi')) t.push('<b>Fiber Powder</b> uống trước bữa tối 15–30 phút với nhiều nước để nhanh no. Uống cách các viên vitamin khoảng 1–2 giờ để không ảnh hưởng hấp thu.');
-  if(has('om')||has('ve')||has('co')) t.push('Omega-3, vitamin E, CoQ10 tan trong dầu: uống ngay sau bữa trưa có chút dầu mỡ thì hấp thu tốt hơn.');
+  if(['pr','prc','sp'].filter(id=>sel.some(s=>s.id===id)).length>1) t.push('Đang chọn nhiều loại bột đạm. Bữa sáng chỉ cần 1 muỗng một loại, các loại còn lại dùng ở bữa phụ.');
+  if(has('om')||has('ve')||has('co')) t.push('Omega-3, vitamin E, CoQ10 tan trong dầu: uống ngay sau bữa trưa có dầu ô liu thì hấp thu tốt hơn.');
   if(has('zn')&&has('fe')) t.push('Kẽm và sắt nên uống ở hai bữa khác nhau (kẽm sau bữa trưa, sắt sau bữa sáng).');
   if(has('pb')) t.push('Probiotic uống trước khi ngủ hoặc lúc bụng đói, không pha với nước nóng.');
   if(has('vb')) t.push('Vitamin B uống buổi sáng. Uống buổi tối có thể làm khó ngủ ở một số người.');
@@ -788,16 +961,17 @@ function save(){
   if(state.custom.length) q.set('cu',state.custom.map(c=>[c.n.replace(/[~|]/g,' '),c.s,c.h?1:0].join('~')).join('|'));
   if(state.fw.some(v=>v)) q.set('fw',state.fw.join('_'));
   if(state.fe.some(v=>v)) q.set('fe',state.fe.join('_'));
-  history.replaceState(null,'','#'+q.toString());
+  try{localStorage.setItem('giaoan-nutrilite',q.toString())}catch(_){}
 }
 function load(){
-  const q=new URLSearchParams(location.hash.slice(1));
+  let raw='';try{raw=localStorage.getItem('giaoan-nutrilite')||''}catch(_){}
+  const q=new URLSearchParams(raw);
   F.forEach(k=>{if(q.has(k))$(k).value=q.get(k)});
   R.forEach(k=>{const el=document.querySelector(`input[name=${k}][value="${CSS.escape(q.get(k)||'')}"]`);if(el)el.checked=true});
-  if(q.has('u')){state.use=new Set(q.get('u').split('.').filter(Boolean));state.touched=true;}
+  if(q.has('u')){state.use=new Set(q.get('u').split('.').filter(id=>PRODUCTS.some(p=>p.id===id)));state.touched=true;}
   if(q.has('hv')) state.have=new Set(q.get('hv').split('.').filter(Boolean));
   for(const [k,v] of q){if(k.startsWith('d_'))state.dose[k.slice(2)]=v;
-    if(k.startsWith('n_')&&state.nut[k.slice(2)]){const [a,b]=v.split('.').map(Number);if(isFinite(a)&&isFinite(b))state.nut[k.slice(2)]={kcal:a,p:b};}}
+    if(k.startsWith('n_')&&state.nut[k.slice(2)]){const [a,b]=v.split('.').map(Number);if(isFinite(a)&&isFinite(b)&&!(k==='n_bk'&&a===200&&b===15))state.nut[k.slice(2)]={kcal:a,p:b};}}
   if(q.get('cu')) state.custom=q.get('cu').split('|').map(s=>{const [n,sl,h]=s.split('~');return {n,s:SLOTS[sl]?sl:'abf',h:h==='1'}}).filter(c=>c.n);
   if(q.get('fw')) state.fw=q.get('fw').split('_');
   if(q.get('fe')) state.fe=q.get('fe').split('_');
@@ -805,13 +979,26 @@ function load(){
 }
 
 /* Sự kiện */
-$('c-slot').innerHTML=Object.entries(SLOTS).filter(([k])=>!['bf','s1','lu','s2','di'].includes(k)).map(([k,v])=>`<option value="${k}">${v.t} · ${v.n}</option>`).join('');
-$('f').addEventListener('input',e=>{if(e.target.name==='goal'&&!state.touched){} render();});
+$('f').addEventListener('input',()=>render());
+$('q').addEventListener('input',renderResults);
+function addSet(sid){const st=SETS.find(x=>x.id===sid);if(!st)return;state.touched=true;
+  st.items.forEach(id=>{if(!hasAny(state.use,id))state.use.add(id)});
+  if(state.use.has('dx'))state.use.delete('da');render();}
+function addProd(id){state.touched=true;state.use.add(id);if(id==='da')state.use.delete('dx');if(id==='dx')state.use.delete('da');render();}
+$('results').addEventListener('click',e=>{
+  const b=e.target.closest('[data-add],[data-cadd],[data-set]');if(!b)return;
+  if(b.dataset.set){addSet(b.dataset.set);return;}
+  if(b.dataset.add){const id=b.dataset.add;state.use.has(id)?(state.use.delete(id),state.touched=true,render()):addProd(id);}
+  else{const n=$('q').value.trim();if(!n)return;state.custom.push({n,s:$('c-slot').value,h:false});$('q').value='';render();}
+});
+$('suggest').addEventListener('click',e=>{const b=e.target.closest('[data-add]');if(b)addProd(b.dataset.add);});
+$('allp').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(b)addSet(b.dataset.set);});
+$('allp').addEventListener('change',e=>{const d=e.target.dataset;if(!d.use)return;state.touched=true;e.target.checked?state.use.add(d.use):state.use.delete(d.use);render();});
+$('prods').addEventListener('click',e=>{const b=e.target.closest('.x');if(!b)return;
+  if(b.dataset.del){state.touched=true;state.use.delete(b.dataset.del);}else state.custom.splice(+b.dataset.cdel,1);render();});
 $('prods').addEventListener('change',e=>{
   const t=e.target,d=t.dataset;
-  if(d.use){state.touched=true;t.checked?state.use.add(d.use):state.use.delete(d.use);render();}
-  else if(d.have){t.checked?state.have.add(d.have):state.have.delete(d.have);render();}
-  else if(d.cdel!=null){state.custom.splice(+d.cdel,1);render();}
+  if(d.have){t.checked?state.have.add(d.have):state.have.delete(d.have);render();}
   else if(d.chave!=null){state.custom[+d.chave].h=t.checked;render();}
 });
 $('prods').addEventListener('input',e=>{
@@ -827,7 +1014,6 @@ function renderLight(){ // vẽ lại phần kết quả, giữ nguyên ô đang
 }
 $('pick-rec').addEventListener('click',()=>{const c=client();if(c.ok){applyRec(c);render();}});
 $('pick-none').addEventListener('click',()=>{state.use.clear();state.touched=true;render();});
-$('c-add').addEventListener('click',()=>{const n=$('c-name').value.trim();if(!n)return;state.custom.push({n,s:$('c-slot').value,h:false});$('c-name').value='';render();});
 $('tabs').addEventListener('click',e=>{const b=e.target.closest('[data-day]');if(!b)return;curDay=+b.dataset.day;
   document.querySelectorAll('#tabs button').forEach((x,i)=>x.setAttribute('aria-selected',i===curDay));
   document.querySelectorAll('#days .day').forEach((x,i)=>x.hidden=i!==curDay);});
@@ -837,11 +1023,142 @@ $('follow').addEventListener('input',e=>{const d=e.target.dataset;
   save();clearTimeout(window._ft);window._ft=setTimeout(()=>{const c=client();if(!c.ok)return;
     const keep=document.activeElement&&{...document.activeElement.dataset};renderFollow(c);
     if(keep){const el=document.querySelector(keep.fw!=null?`[data-fw="${keep.fw}"]`:`[data-fe="${keep.fe}"]`);if(el){el.focus();}}},500);});
-$('print').addEventListener('click',()=>window.print());
 $('share').addEventListener('click',async()=>{
-  try{await navigator.clipboard.writeText(location.href);$('share-msg').textContent='Đã sao chép link. Mở link này sẽ thấy đúng giáo án và số cân đã nhập.'}
-  catch(e){$('share-msg').textContent='Không sao chép được, hãy sao chép địa chỉ trên thanh trình duyệt.'}
+  const txt=planText();
+  try{await navigator.clipboard.writeText(txt);$('share-msg').textContent='Đã sao chép. Dán vào Zalo hoặc Messenger để gửi khách.'}
+  catch(e){$('copybox').hidden=false;$('copybox').value=txt;$('copybox').select();$('share-msg').textContent='Không sao chép tự động được. Nội dung đã được chọn sẵn ở ô bên dưới, bạn nhấn giữ để sao chép.'}
 });
+function planText(){
+  const c=client();if(!c.ok) return '';
+  const L=[];
+  L.push(`GIÁO ÁN ${c.goal==='cut'?'GIẢM':'TĂNG'} CÂN${c.name?' · '+c.name.toUpperCase():''}`);
+  L.push(`${c.age} tuổi · ${c.h} cm · ${dec(c.w)} kg → mục tiêu ${dec(c.tw)} kg`);
+  L.push(`Mỗi ngày: khoảng ${fmt(c.kcal)} kcal, ${c.prot} g đạm, ${dec(c.water)} lít nước`);
+  if(c.weeks) L.push(`Dự kiến: ${dec(Math.abs(predict(c,4)-c.w))} kg sau 1 tháng, đạt mục tiêu sau khoảng ${c.weeks} tuần`);
+  L.push('','LỊCH TRONG NGÀY');
+  document.querySelectorAll('#timeline .tl').forEach(r=>{
+    L.push(r.querySelector('.tm').textContent+' '+r.querySelector('.what').textContent);
+    const n=r.querySelector('.note');if(n)L.push('   '+n.textContent);
+    r.querySelectorAll('li').forEach(li=>L.push('   • '+li.firstElementChild.textContent.replace('💊 ','')));
+  });
+  document.querySelectorAll('#days .day').forEach((d,i)=>{
+    L.push('','THỰC ĐƠN '+DAYS[i].toUpperCase());
+    d.querySelectorAll('.meal-card').forEach(m=>{
+      L.push(m.querySelector('.mh b').textContent);
+      m.querySelectorAll('.food').forEach(f=>L.push(`   • ${f.querySelector('.fn').textContent}: ${f.querySelector('.fg').textContent} (${f.querySelector('.fe').textContent})`));
+      m.querySelectorAll('.vit').forEach(v=>{L.push('   '+v.querySelector('b').textContent);v.querySelectorAll('.vr').forEach(r=>L.push(`     - ${r.querySelector('.vn').textContent}: ${r.querySelector('.vd').textContent}`));});
+    });
+  });
+  L.push('','LƯU Ý');
+  document.querySelectorAll('#tips li').forEach(li=>L.push('• '+li.textContent));
+  L.push('','Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.');
+  return L.join('\n');
+}
+let resetArm=false;
+$('reset').addEventListener('click',()=>{
+  if(!resetArm){resetArm=true;$('reset').textContent='Nhấn lần nữa để xóa';setTimeout(()=>{resetArm=false;$('reset').textContent='Khách mới (xóa dữ liệu)'},3000);return;}
+  try{localStorage.removeItem('giaoan-nutrilite')}catch(_){}
+  ['name','waist'].forEach(k=>$(k).value='');
+  state.have.clear();state.dose={};state.custom=[];state.fw=[];state.fe=[];state.touched=false;
+  $('start').value=new Date().toISOString().slice(0,10);
+  resetArm=false;$('reset').textContent='Khách mới (xóa dữ liệu)';$('share-msg').textContent='Đã xóa dữ liệu khách cũ.';render();window.scrollTo(0,0);
+});
+/* Tạo ảnh gửi khách */
+let LAST=null;
+const qty=i=>i.custom?i.g:(i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g');
+const eyeTxt=i=>i.custom?i.e:eye(i.f.v,i.g,i.name||i.f.n);
+const shortN=n=>n.replace(/^Nutrilite\s+/,'').replace(/\s*\(.*\)$/,'');
+function pillLine(list,label){return list&&list.length?`<div class="pv">${label}: ${list.map(s=>esc(shortN(s.n))).join(' · ')}</div>`:''}
+function posterHead(c,title,sub){
+  const who=`<div class="pwho"><div><span>Họ tên</span><b>${esc(c.name||'Khách hàng')}</b></div><div><span>Hiện tại</span><b>${dec(c.w)} kg</b></div><div><span>Mục tiêu</span><b>${dec(c.tw)} kg</b></div><div><span>Bắt đầu</span><b>${c.start?dstr(addDays(c.start,0))+'/'+c.start.slice(0,4):'–'}</b></div></div>`;
+  return `<div><div class="pb">QUANG SLIMFIT COACH</div><h1>${title}</h1><div class="ps">${sub}</div></div>${who}`;
+}
+function posterFoot(c){return `<div class="pft"><span>Nước: ${dec(c.water)} lít/ngày · Ngủ trước 23:00</span><span>1 chén cơm ≈ 120 g · 1 miếng thịt cá vừa ≈ 100 g · 1 đĩa rau ≈ 200 g</span></div>`}
+function posterDay(d){
+  const {c,days,bySlot}=LAST,meals=days[d];
+  const kOf=i=>i.custom?i.k:kcalOf(i),pOf=i=>i.custom?i.p:protOf(i);
+  const tk=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+kOf(i),0),0);
+  const after={bf:'abf',lu:'alu',di:'adi'};
+  let body='';
+  if(bySlot.wake) body+=`<div class="pm">${pillLine(bySlot.wake,SLOTS.wake.t+' Khi thức dậy')}</div>`;
+  meals.forEach(m=>{
+    if(m.slot==='di'&&bySlot.pdi) body+=`<div class="pm">${pillLine(bySlot.pdi,SLOTS.pdi.t+' Trước bữa tối')}</div>`;
+    const mk=m.its.reduce((a,i)=>a+kOf(i),0);
+    const own=(bySlot[m.slot]||[]).filter(s=>!['bk','bkn','pr','prc','sp'].includes(s.id));
+    body+=`<div class="pm"><div class="pmh"><b>${SLOTS[m.slot].t} · ${SLOTS[m.slot].n}</b><span>~${fmt(r10(mk))} kcal</span></div>
+      ${m.its.map(i=>`<div class="pf"><span class="pfn">${esc(i.custom?i.n:(i.name||i.f.n))}</span><span class="pfg">${qty(i)}</span><span class="pfe">${esc(eyeTxt(i))}</span></div>`).join('')}
+      ${pillLine(own,'Dùng kèm')}${pillLine(bySlot[after[m.slot]],'Sau bữa uống')}</div>`;
+  });
+  if(bySlot.bed) body+=`<div class="pm">${pillLine(bySlot.bed,SLOTS.bed.t+' Trước khi ngủ')}</div>`;
+  return `<div class="pst">${posterHead(c,'Thực đơn '+DAYS[d],(c.goal==='cut'?'Giáo án giảm cân':'Giáo án tăng cân')+' · khoảng '+fmt(r10(tk))+' kcal · '+c.prot+' g đạm')}${body}${posterFoot(c)}</div>`;
+}
+function posterCover(){
+  const {c,sel,bySlot}=LAST;
+  const order=['wake','bf','abf','s1','lu','alu','s2','pdi','di','adi','bed'];
+  const rows=order.filter(sl=>bySlot[sl]||['bf','s1','lu','s2','di'].includes(sl)).map(sl=>{
+    const isMeal=['bf','s1','lu','s2','di'].includes(sl);
+    const pr=(bySlot[sl]||[]).map(s=>esc(shortN(s.n))).join(' · ');
+    return `<div class="pt"><b>${SLOTS[sl].t}</b><div>${SLOTS[sl].n}${pr?`<small>${pr}</small>`:isMeal?'<small>Theo thực đơn trong ngày</small>':''}</div></div>`;
+  }).join('');
+  const res=[1,4,12].map(k=>{const p=predict(c,k);return `<div><i>${k===1?'Sau 1 tuần':k===4?'Sau 1 tháng':'Sau 3 tháng'}</i><b>${dec(p)} kg</b>${c.goal==='cut'?'giảm':'tăng'} ${dec(Math.abs(p-c.w))} kg</div>`}).join('');
+  return `<div class="pst">${posterHead(c,(c.goal==='cut'?'Giáo án giảm cân':'Giáo án tăng cân'),`${c.sex==='m'?'Nam':'Nữ'} · ${c.age} tuổi · ${c.h} cm · cần ${c.goal==='cut'?'giảm':'tăng'} ${dec(c.diff)} kg`)}
+    <div class="pk"><div><b>${fmt(c.kcal)}</b>kcal mỗi ngày</div><div><b>${c.prot} g</b>đạm mỗi ngày</div><div><b>${dec(c.water)} L</b>nước mỗi ngày</div>${c.weeks?`<div><b>${c.weeks} tuần</b>đạt mục tiêu</div>`:''}</div>
+    <h2>Lịch ăn và dùng sản phẩm</h2><div class="pm">${rows}</div>
+    <h2>Kết quả dự kiến</h2><div class="pr">${res}</div>
+    <div class="pft"><span>Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.</span></div></div>`;
+}
+const IMGS=[],URLS=[];
+/* Trong khung xem của Claude, trình duyệt chặn tải file. Mở trang ở trình duyệt thường thì tải được. */
+const TOP=(()=>{try{return window.self===window.top}catch(_){return false}})();
+let DLNS=null,CAN_DL=TOP;
+function setHow(){$('save-how').textContent=CAN_DL?'Tạo xong bấm "Tải cả 8 ảnh" để lưu vào máy (hoặc "Tải ảnh" dưới từng ảnh), rồi gửi qua Zalo.':'Tạo xong thì nhấn giữ vào ảnh (điện thoại) hoặc chuột phải (máy tính) rồi chọn Lưu ảnh. Hoặc bấm Sao chép rồi dán vào Zalo.';}
+if(!TOP&&window.claude&&window.claude.use){window.claude.use('downloads').then(ns=>{if(ns){DLNS=ns;CAN_DL=true;setHow();
+  document.querySelectorAll('#imgs figcaption [data-copy]').forEach((b,i)=>{if(!b.parentNode.querySelector('[data-dl]'))b.insertAdjacentHTML('beforebegin',`<button type="button" class="dlbtn" data-dl="${i}">Tải ảnh</button>`)});
+  if(URLS.length)$('dl-all').hidden=false;}}).catch(()=>{});}
+async function saveOne(i){
+  const [u,n,blob]=URLS[i];
+  if(DLNS){try{await DLNS.save({filename:n,data:blob});return true}catch(e){
+      if(e&&e.code==='declined')return false;
+      $('img-msg').textContent=e&&e.code==='rate_limited'?'Đang có một hộp thoại tải đang mở, bấm lại sau.':'Không tải được ở đây. Nhấn giữ hoặc chuột phải vào ảnh để lưu.';return false;}}
+  const a=document.createElement('a');a.href=u;a.download=n;document.body.appendChild(a);a.click();a.remove();return true;
+}
+const slug=t=>norm(t).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+const fileName=(c,i,label)=>`giao-an-${slug(c.name||'khach')}-${i+1}-${slug(label)}.jpg`;
+setHow();
+$('go-dl').addEventListener('click',()=>{$('dl').scrollIntoView({behavior:'smooth'});if(!$('imgs').childElementCount)$('mk-img').click();});
+$('dl-all').addEventListener('click',async()=>{for(let i=0;i<URLS.length;i++){const ok=await saveOne(i);if(!ok&&DLNS)break;await new Promise(r=>setTimeout(r,DLNS?100:400));}});
+$('mk-img').addEventListener('click',async()=>{
+  const c=client();if(!c.ok||!LAST){$('img-msg').textContent='Nhập đủ thông tin khách trước khi tạo ảnh.';return;}
+  if(!c.name){$('img-msg').textContent='Nhập họ tên khách ở mục 1 trước khi tạo ảnh.';$('name').focus();return;}
+  if(!window.html2canvas){$('img-msg').textContent='Chưa tải được công cụ tạo ảnh. Kiểm tra mạng rồi thử lại.';return;}
+  const btn=$('mk-img');btn.disabled=true;$('imgs').innerHTML='';IMGS.length=0;URLS.length=0;$('dl-all').hidden=true;
+  try{await document.fonts.ready}catch(_){}
+  const list=[['Tổng quan',posterCover()],...DAYS.map((d,i)=>['Thực đơn '+d,posterDay(i)])];
+  const host=$('poster-host');
+  try{
+    for(let i=0;i<list.length;i++){
+      btn.textContent=`Đang tạo ảnh ${i+1}/${list.length}...`;
+      host.innerHTML=list[i][1];
+      const cv=await html2canvas(host.firstElementChild,{scale:1,backgroundColor:'#FBE9DA',logging:false});
+      const url=cv.toDataURL('image/jpeg',.92);URLS[i]=[url,fileName(c,i,list[i][0]),await new Promise(r=>cv.toBlob(r,'image/jpeg',.92))];
+      const blob=await new Promise(r=>cv.toBlob(r,'image/png'));
+      IMGS.push(blob);
+      const fig=document.createElement('figure');
+      fig.innerHTML=`<img src="${url}" alt="${list[i][0]}"><figcaption><span>${i+1}. ${list[i][0]}</span><span style="display:flex;gap:6px">${CAN_DL?`<button type="button" class="dlbtn" data-dl="${i}">Tải ảnh</button>`:''}<button type="button" class="alt" data-copy="${i}">Sao chép</button></span></figcaption>`;
+      $('imgs').appendChild(fig);
+    }
+    $('img-msg').textContent=CAN_DL?'Đã tạo xong 8 ảnh. Bấm "Tải cả 8 ảnh" hoặc "Tải ảnh" dưới từng ảnh.':'Đã tạo xong 8 ảnh. Nhấn giữ (điện thoại) hoặc chuột phải (máy tính) vào ảnh, chọn Lưu ảnh.';
+    $('dl-all').hidden=!CAN_DL;
+  }catch(err){$('img-msg').textContent='Không tạo được ảnh: '+err.message;}
+  host.innerHTML='';btn.disabled=false;btn.textContent='Tạo lại ảnh';
+});
+$('imgs').addEventListener('click',async e=>{
+  const d=e.target.closest('[data-dl]');if(d){saveOne(+d.dataset.dl);return;}
+  const b=e.target.closest('[data-copy]');if(!b)return;
+  try{await navigator.clipboard.write([new ClipboardItem({'image/png':IMGS[+b.dataset.copy]})]);b.textContent='Đã sao chép';setTimeout(()=>b.textContent='Sao chép',2000);}
+  catch(_){b.textContent='Không sao chép được, nhấn giữ ảnh để lưu';}
+});
+
 load();render();
 </script>
 </body>
