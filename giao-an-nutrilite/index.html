@@ -267,9 +267,9 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
         </div></div>
       <label class="full">Tốc độ
         <select id="pace">
-          <option value="300">Nhẹ nhàng (khoảng 0,3 kg/tuần), dễ duy trì</option>
-          <option value="500" selected>Vừa phải (khoảng 0,5 kg/tuần), khuyên dùng</option>
-          <option value="700">Nhanh (khoảng 0,6–0,7 kg/tuần), cần kỷ luật cao</option>
+          <option value="330">Nhẹ nhàng: 0,3 kg/tuần, dễ duy trì</option>
+          <option value="550">Vừa phải: 0,5 kg/tuần</option>
+          <option value="770" selected>Gấp rút: 0,7 kg/tuần, ăn kiêng kết hợp đi bộ</option>
         </select></label>
       <div class="full" id="shake-box"><div class="legend">Số bữa dùng BodyKey</div>
         <div class="seg" role="radiogroup" aria-label="Số bữa dùng BodyKey">
@@ -405,6 +405,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'
 /* Thời điểm trong ngày */
 const SLOTS={
   wake:{t:'6:30',n:'Khi thức dậy'},
+  walk:{t:'17:30',n:'Vận động'},
   bf:{t:'7:00',n:'Bữa sáng'},
   abf:{t:'7:30',n:'Sau bữa sáng'},
   s1:{t:'10:00',n:'Bữa phụ sáng'},
@@ -654,17 +655,20 @@ function client(){
   c.tdee=c.bmr*c.act;
   c.clamp='';
   if(c.goal==='cut'){
-    let def=c.pace;
-    const maxDef=c.w*.01*7700/7; // tối đa 1% cân nặng mỗi tuần
-    if(def>maxDef){def=maxDef;c.clamp='Đã giảm mức thâm hụt để khách không giảm quá 1% cân nặng mỗi tuần.';}
+    const def=c.pace; // kcal thâm hụt mỗi ngày: 330 ≈ 0,3 kg, 550 ≈ 0,5 kg, 770 ≈ 0,7 kg mỗi tuần
     const floor=c.sex==='m'?1500:1200;
-    c.kcal=c.tdee-def;
-    if(c.kcal<floor){c.kcal=floor;c.clamp=`Calo đã được giữ ở mức tối thiểu ${fmt(floor)} kcal để đảm bảo sức khỏe. Muốn giảm nhanh hơn, khách nên tăng vận động thay vì ăn ít hơn.`;}
-    c.kcal=r10(c.kcal);
-    c.delta=c.tdee-c.kcal;
+    c.kcal=r10(Math.max(c.tdee-def,floor));
+    // Phần thâm hụt chưa đủ thì bù bằng đi bộ nhanh (khoảng 0,065 kcal mỗi kg mỗi phút)
+    const gap=def-(c.tdee-c.kcal);
+    c.walk=gap>30?Math.min(Math.ceil(gap/(0.065*c.w)/5)*5,90):0;
+    c.walkK=Math.round(c.walk*0.065*c.w);
+    c.delta=c.tdee-c.kcal+c.walkK;
+    const wk=c.delta*7/7700;
+    if(c.walk) c.clamp=`Để giảm ${dec(wk)} kg/tuần mà vẫn ăn tối thiểu ${fmt(floor)} kcal, khách cần đi bộ nhanh thêm ${c.walk} phút mỗi ngày (đốt khoảng ${fmt(c.walkK)} kcal). Có thể chia 2 lần, hoặc thay bằng đạp xe, bơi cùng thời gian.`+(c.walk>=90&&gap>c.walkK+30?' Mức này đã là tối đa, nên tốc độ thực tế chậm hơn mức đã chọn.':'');
+    if(wk>c.w*.01) c.clamp=(c.clamp?c.clamp+' ':'')+`Lưu ý: ${dec(wk)} kg/tuần là trên 1% cân nặng của khách, khá nhanh. Theo dõi sát, nếu khách mệt, chóng mặt, mất ngủ thì chuyển về 0,5 kg/tuần.`;
     c.prot=Math.round((c.bmi>=30?Math.max(c.tw,c.w*.85):c.w)*1.8);
   }else{
-    c.kcal=r10(c.tdee+Math.min(c.pace,500));
+    c.kcal=r10(c.tdee+Math.min(c.pace,500));c.walk=0;
     c.delta=c.kcal-c.tdee;
     c.prot=Math.round(c.w*1.8);
   }
@@ -738,7 +742,7 @@ function renderResults(){
   let h=hits.map(p=>{const on=state.use.has(p.id);
     return `<button type="button" class="res${on?' added':''}" data-add="${p.id}"><span>${esc(p.n)}${lastC.ok?BADGE(recLevel(p,lastC)):''}<small>Mã ${p.c} · ${esc(p.why[goal])}</small></span><b>${on?'✓ Đã thêm':'+ Thêm'}</b></button>`}).join('')+sets.map(setRow).join('');
   h+=`<div class="addnew"><p>${hits.length||sets.length?'Không thấy sản phẩm cần tìm?':'Không tìm thấy.'} Thêm “${esc(q)}” làm sản phẩm mới:</p>
-    <select id="c-slot" aria-label="Thời điểm dùng">${Object.entries(SLOTS).filter(([k])=>!['bf','s1','lu','s2','di'].includes(k)).map(([k,v])=>`<option value="${k}">${v.t} · ${v.n}</option>`).join('')}</select>
+    <select id="c-slot" aria-label="Thời điểm dùng">${Object.entries(SLOTS).filter(([k])=>!['bf','s1','lu','s2','di','walk'].includes(k)).map(([k,v])=>`<option value="${k}">${v.t} · ${v.n}</option>`).join('')}</select>
     <button type="button" class="sm" data-cadd="1">Thêm</button></div>`;
   box.innerHTML=h;box.hidden=false;
 }
@@ -764,7 +768,7 @@ function render(){
   $('goal-tag').textContent=c.goal==='cut'?'GIÁO ÁN GIẢM CÂN':'GIÁO ÁN TĂNG CÂN';
   $('who').textContent=(c.name?c.name+' · ':'')+`${c.age} tuổi · ${c.h} cm · ${dec(c.w)} kg → ${dec(c.tw)} kg`;
   $('kcal').innerHTML=fmt(c.kcal)+' <span>kcal</span>';
-  $('kcal-note').textContent=`Calo giữ cân khoảng ${fmt(r10(c.tdee))} kcal. Mức này ${c.goal==='cut'?'giảm':'tăng'} khoảng ${dec(c.rate,2)} kg mỗi tuần.`;
+  $('kcal-note').textContent=`Calo giữ cân khoảng ${fmt(r10(c.tdee))} kcal. Mức này${c.walk?` cộng đi bộ nhanh ${c.walk} phút mỗi ngày`:''} ${c.goal==='cut'?'giảm':'tăng'} khoảng ${dec(c.rate,2)} kg mỗi tuần.`;
   $('s-bmi').textContent=dec(c.bmi);
   $('s-bmi-l').textContent='BMI · '+(c.bmi<18.5?'thiếu cân':c.bmi<23?'bình thường':c.bmi<25?'thừa cân nhẹ':c.bmi<30?'thừa cân':'béo phì');
   $('s-prot').textContent=c.prot+' g';
@@ -784,9 +788,10 @@ function render(){
   $('tabs').innerHTML=DAYS.map((d,i)=>`<button type="button" role="tab" aria-selected="${i===curDay}" data-day="${i}">${d}</button>`).join('');
   const bySlot={};
   sel.forEach(s=>s.slots.forEach(sl=>(bySlot[sl]=bySlot[sl]||[]).push(s)));
+  if(c.walk) bySlot.walk=[{id:'walk',n:`Đi bộ nhanh ${c.walk} phút`,dose:'Đi nhanh đến mức hơi thở gấp nhưng vẫn nói chuyện được. Có thể chia 2 lần hoặc thay bằng đạp xe, bơi.',slots:['walk']}];
   const SHAKE=['bk','bkn','pr','prc','sp'];
-  const vitRows=(list,label)=>list&&list.length?`<div class="vit"><b>💊 ${label}</b>${list.map(v=>`<div class="vr"><span class="vn">${esc(v.n)}</span>${v.dose?`<span class="vd">${esc(v.dose)}</span>`:''}</div>`).join('')}</div>`:'';
-  const vitCard=sl=>bySlot[sl]?`<div class="meal-card"><div class="mh"><b>${SLOTS[sl].t} · ${SLOTS[sl].n}</b><span>Sản phẩm</span></div>${vitRows(bySlot[sl],'Uống')}</div>`:'';
+  const vitRows=(list,label,ic='💊')=>list&&list.length?`<div class="vit"><b>${ic} ${label}</b>${list.map(v=>`<div class="vr"><span class="vn">${esc(v.n)}</span>${v.dose?`<span class="vd">${esc(v.dose)}</span>`:''}</div>`).join('')}</div>`:'';
+  const vitCard=sl=>bySlot[sl]?`<div class="meal-card"><div class="mh"><b>${SLOTS[sl].t} · ${SLOTS[sl].n}</b><span>${sl==='walk'?'~'+fmt(c.walkK)+' kcal':'Sản phẩm'}</span></div>${sl==='walk'?vitRows(bySlot[sl],'Đi bộ','🚶'):vitRows(bySlot[sl],'Uống')}</div>`:'';
   const AFTER={bf:'abf',lu:'alu',di:'adi'};
   $('days').innerHTML=days.map((meals,d)=>{
     const tk=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+kOf(i),0),0),tp=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+pOf(i),0),0);
@@ -796,7 +801,7 @@ function render(){
         `<div class="food"><span class="fn">${i.name||i.f.n}</span><span class="fg">${i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g'}</span><span class="fe">${eye(i.f.v,i.g,i.name||i.f.n)}</span></div>`).join('');
       const tip=m.slot==='lu'||m.slot==='di'?'<div class="mf">Ăn rau trước, rồi đến thịt cá, cuối cùng là tinh bột. Nấu hấp, luộc hoặc áp chảo với dầu ô liu, dùng đúng lượng dầu ghi trong thực đơn.</div>':'';
       const own=(bySlot[m.slot]||[]).filter(v=>!SHAKE.includes(v.id));
-      const pre=m.slot==='di'?vitCard('pdi'):'';
+      const pre=m.slot==='di'?vitCard('walk')+vitCard('pdi'):'';
       return `${pre}<div class="meal-card"><div class="mh"><b>${SLOTS[m.slot].t} · ${SLOTS[m.slot].n}</b><span>~${fmt(r10(mk))} kcal · ${Math.round(mp)} g đạm</span></div>${rows}${vitRows(own,'Dùng kèm trong bữa')}${vitRows(bySlot[AFTER[m.slot]],'Sau bữa uống ('+(SLOTS[AFTER[m.slot]]||{}).t+')')}${tip}</div>`;
     }).join('')}${vitCard('bed')}<p class="note">Tổng ngày: khoảng ${fmt(r10(tk))} kcal, ${Math.round(tp)} g đạm. Có thể đổi món giữa các ngày, giữ nguyên số gram.</p></div>`;
   }).join('');
@@ -807,12 +812,12 @@ function render(){
     if(sl==='bf'&&c.goal==='cut'&&(hasAny(state.use,'bk')||hasAny(state.use,'pr'))) return 'Lắc '+[hasAny(state.use,'bk')&&bkLabel(state.use),hasAny(state.use,'pr')&&prLabel(state.use)].filter(Boolean).join(' + ')+' với 250 ml nước. Xem gram ở thực đơn.';
     if(sl==='di'&&c.goal==='cut'&&c.shakes===2&&hasAny(state.use,'bk')) return bkLabel(state.use)+(hasAny(state.use,'pr')?' + Protein':'')+' và 1 đĩa rau luộc.';
     return m.its.filter(i=>!i.custom&&i.f.v!=='oil').map(i=>(i.name||i.f.n).split(' (')[0]+' '+(i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g')).join(' · ')+' (thực đơn Thứ 2)';};
-  const slotOrder=['wake','bf','abf','s1','lu','alu','s2','pdi','di','adi','bed'];
+  const slotOrder=['wake','bf','abf','s1','lu','alu','s2','walk','pdi','di','adi','bed'];
   const extra={wake:'Uống 1–2 ly nước ấm (300–500 ml).',bed:'Ngủ trước 23:00, đủ 7–8 tiếng.',pdi:'Uống 1 ly nước lớn.'};
   $('timeline').innerHTML=slotOrder.filter(sl=>bySlot[sl]||['bf','s1','lu','s2','di','wake','bed'].includes(sl)).map(sl=>{
     const isMeal=['bf','s1','lu','s2','di'].includes(sl);
     const prods=(bySlot[sl]||[]).filter(s=>!(isMeal&&(s.id==='bk'||s.id==='pr')&&sl==='bf'&&c.goal==='cut'&&false));
-    const li=prods.map(s=>`<li><span>💊 <b>${esc(s.n)}</b>${s.dose?' · '+esc(s.dose):''}</span></li>`).join('');
+    const li=prods.map(s=>`<li><span>${s.id==="walk"?"🚶":"💊"} <b>${esc(s.n)}</b>${s.dose?' · '+esc(s.dose):''}</span></li>`).join('');
     const txt=isMeal?mealText(sl):(extra[sl]||'');
     return `<div class="tl${isMeal?' meal':''}"><span class="tm">${SLOTS[sl].t}</span><div><div class="what">${SLOTS[sl].n}</div>${txt?`<div class="note">${txt}</div>`:''}${li?`<ul>${li}</ul>`:''}</div></div>`;
   }).join('');
@@ -975,6 +980,7 @@ function load(){
   if(q.get('cu')) state.custom=q.get('cu').split('|').map(s=>{const [n,sl,h]=s.split('~');return {n,s:SLOTS[sl]?sl:'abf',h:h==='1'}}).filter(c=>c.n);
   if(q.get('fw')) state.fw=q.get('fw').split('_');
   if(q.get('fe')) state.fe=q.get('fe').split('_');
+  if($('pace').selectedIndex<0||!$('pace').value) $('pace').value='770';
   if(!$('start').value){const d=new Date();$('start').value=d.toISOString().slice(0,10);}
 }
 
@@ -1082,6 +1088,7 @@ function posterDay(d){
   let body='';
   if(bySlot.wake) body+=`<div class="pm">${pillLine(bySlot.wake,SLOTS.wake.t+' Khi thức dậy')}</div>`;
   meals.forEach(m=>{
+    if(m.slot==='di'&&bySlot.walk) body+=`<div class="pm"><div class="pv">${SLOTS.walk.t} Vận động: ${esc(bySlot.walk[0].n)}</div></div>`;
     if(m.slot==='di'&&bySlot.pdi) body+=`<div class="pm">${pillLine(bySlot.pdi,SLOTS.pdi.t+' Trước bữa tối')}</div>`;
     const mk=m.its.reduce((a,i)=>a+kOf(i),0);
     const own=(bySlot[m.slot]||[]).filter(s=>!['bk','bkn','pr','prc','sp'].includes(s.id));
@@ -1094,7 +1101,7 @@ function posterDay(d){
 }
 function posterCover(){
   const {c,sel,bySlot}=LAST;
-  const order=['wake','bf','abf','s1','lu','alu','s2','pdi','di','adi','bed'];
+  const order=['wake','bf','abf','s1','lu','alu','s2','walk','pdi','di','adi','bed'];
   const rows=order.filter(sl=>bySlot[sl]||['bf','s1','lu','s2','di'].includes(sl)).map(sl=>{
     const isMeal=['bf','s1','lu','s2','di'].includes(sl);
     const pr=(bySlot[sl]||[]).map(s=>esc(shortN(s.n))).join(' · ');
