@@ -1069,9 +1069,9 @@ const qty=i=>i.custom?i.g:(i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g
 const eyeTxt=i=>i.custom?i.e:eye(i.f.v,i.g,i.name||i.f.n);
 const shortN=n=>n.replace(/^Nutrilite\s+/,'').replace(/\s*\(.*\)$/,'');
 function pillLine(list,label){return list&&list.length?`<div class="pv">${label}: ${list.map(s=>esc(shortN(s.n))).join(' · ')}</div>`:''}
-function posterHead(c,title,sub){
+function posterHead(c,title,sub,showWho=true){
   const who=`<div class="pwho"><div><span>Họ tên</span><b>${esc(c.name||'Khách hàng')}</b></div><div><span>Hiện tại</span><b>${dec(c.w)} kg</b></div><div><span>Mục tiêu</span><b>${dec(c.tw)} kg</b></div><div><span>Bắt đầu</span><b>${c.start?dstr(addDays(c.start,0))+'/'+c.start.slice(0,4):'–'}</b></div></div>`;
-  return `<div><div class="pb">QUANG SLIMFIT COACH</div><h1>${title}</h1><div class="ps">${sub}</div></div>${who}`;
+  return `<div><div class="pb">QUANG SLIMFIT COACH</div><h1>${title}</h1>${sub?`<div class="ps">${sub}</div>`:''}</div>${showWho?who:''}`;
 }
 function posterFoot(c){return `<div class="pft"><span>Nước: ${dec(c.water)} lít/ngày · Ngủ trước 23:00</span><span>1 chén cơm ≈ 120 g · 1 miếng thịt cá vừa ≈ 100 g · 1 đĩa rau ≈ 200 g</span></div>`}
 function posterDay(d){
@@ -1090,7 +1090,7 @@ function posterDay(d){
       ${pillLine(own,'Dùng kèm')}${pillLine(bySlot[after[m.slot]],'Sau bữa uống')}</div>`;
   });
   if(bySlot.bed) body+=`<div class="pm">${pillLine(bySlot.bed,SLOTS.bed.t+' Trước khi ngủ')}</div>`;
-  return `<div class="pst">${posterHead(c,'Thực đơn '+DAYS[d],(c.goal==='cut'?'Giáo án giảm cân':'Giáo án tăng cân')+' · khoảng '+fmt(r10(tk))+' kcal · '+c.prot+' g đạm')}${body}${posterFoot(c)}</div>`;
+  return `<div class="pst">${posterHead(c,'Thực đơn '+DAYS[d],'',false)}${body}${posterFoot(c)}</div>`;
 }
 function posterCover(){
   const {c,sel,bySlot}=LAST;
