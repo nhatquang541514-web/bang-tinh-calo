@@ -42,6 +42,7 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
 .seg label{position:relative;flex-direction:row;justify-content:center;text-align:center;padding:11px 6px;border:1px solid var(--line);border-radius:10px;background:var(--bg);cursor:pointer;font-weight:600}
 .seg label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 .seg label:has(input:focus-visible){outline:2px solid var(--accent)}
+.goalseg label{padding:14px 8px;font:700 1rem var(--display)}
 .legend{font-weight:600;font-size:.9rem;margin-bottom:6px}
 .hint{font-size:.82rem;color:var(--muted);font-weight:400}
 .err{color:var(--accent);font-weight:600;font-size:.9rem}
@@ -243,6 +244,11 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
   <!-- 1. Thông tin khách -->
   <div class="panel no-print" id="f">
     <h2>1. Thông tin khách hàng</h2>
+    <div class="goalseg seg" role="radiogroup" aria-label="Mục tiêu">
+      <label><input type="radio" name="goal" value="cut" checked><span>⬇️ Giáo án giảm cân</span></label>
+      <label><input type="radio" name="goal" value="gain"><span>⬆️ Giáo án tăng cân</span></label>
+    </div>
+    <p class="hint" style="margin-top:-6px">Nhập cân nặng mục tiêu cao hơn hiện tại thì trang tự chuyển sang tăng cân, thấp hơn thì giảm cân.</p>
     <div class="grid">
       <label class="full">Tên khách hàng<input id="name" type="text" maxlength="40" placeholder="VD: Chị Lan" autocomplete="off"></label>
       <div class="full seg" role="radiogroup" aria-label="Giới tính">
@@ -262,16 +268,9 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
           <option value="1.55">Vận động vừa: tập 3–5 buổi/tuần</option>
           <option value="1.725">Vận động nhiều: tập 6–7 buổi/tuần hoặc lao động nặng</option>
         </select></label>
-      <div class="full"><div class="legend">Mục tiêu</div>
-        <div class="seg" role="radiogroup" aria-label="Mục tiêu">
-          <label><input type="radio" name="goal" value="cut" checked><span>Giảm cân</span></label>
-          <label><input type="radio" name="goal" value="gain"><span>Tăng cân</span></label>
-        </div></div>
       <label class="full">Tốc độ
         <select id="pace">
-          <option value="330">Nhẹ nhàng: 0,3 kg/tuần, dễ duy trì</option>
-          <option value="550">Vừa phải: 0,5 kg/tuần</option>
-          <option value="770" selected>Gấp rút: 0,7 kg/tuần, ăn kiêng kết hợp đi bộ</option>
+
         </select></label>
       <div class="full" id="shake-box"><div class="legend">Số bữa dùng BodyKey</div>
         <div class="seg" role="radiogroup" aria-label="Số bữa dùng BodyKey">
@@ -581,12 +580,16 @@ const MENU={
   gainBf:[['bread',80,'Bánh mì'],['oat',60,'Yến mạch']]
 };
 
-function mainMeal(budget,pid,cid,protTarget,oilG,minCarb){
+function mainMeal(budget,pid,cid,protTarget,oilG,minCarb,maxCarb=Infinity){
   const veg=item('veg',200),oil=item('oil',oilG);
   let pg=Math.min(Math.max(r10(protTarget/FOOD[pid].p*100),80),220);
   if(pid==='trung') pg=Math.max(100,Math.round(pg/50)*50);
   let cg=r10((budget-kcalOf(veg)-kcalOf(oil)-FOOD[pid].k*pg/100)/FOOD[cid].k*100);
   if(cg<minCarb){cg=minCarb;}
+  if(cg>maxCarb){ // tinh bột quá nhiều thì dồn calo dư sang thịt cá
+    const extra=(cg-maxCarb)*FOOD[cid].k/100;cg=maxCarb;
+    pg=pid==='trung'?Math.min(pg+Math.round(extra/70)*50,200):Math.min(r10(pg+extra/FOOD[pid].k*100),280);
+  }
   return [item(cid,cg),item(pid,pg),veg,oil];
 }
 
@@ -635,8 +638,8 @@ function buildDay(d,c,P){
     const fixed=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+(i.custom?i.k:kcalOf(i)),0),0);
     const fixedP=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+(i.custom?i.p:protOf(i)),0),0);
     const rest=c.kcal-fixed,pt=Math.max((c.prot-fixedP)/2,30);
-    const lu=mainMeal(rest*.52,MENU.luP[d],'rice',Math.min(pt,50),10,150);lu[2].name=MENU.luV[d];
-    const di=mainMeal(rest*.48,MENU.diP[d]==='dau'?'trung':MENU.diP[d],'rice',Math.min(pt,50),10,150);di[2].name=MENU.diV[d];
+    const lu=mainMeal(rest*.52,MENU.luP[d],'rice',Math.min(Math.max(pt,35),50),10,150,300);lu[2].name=MENU.luV[d];
+    const di=mainMeal(rest*.48,MENU.diP[d]==='dau'?'trung':MENU.diP[d],'rice',Math.min(Math.max(pt,35),50),10,150,300);di[2].name=MENU.diV[d];
     meals.push({slot:'lu',its:lu},{slot:'di',its:di});
   }
   const order=['bf','s1','lu','s2','di'];
@@ -670,7 +673,7 @@ function client(){
     if(wk>c.w*.01) c.clamp=(c.clamp?c.clamp+' ':'')+`Lưu ý: ${dec(wk)} kg/tuần là trên 1% cân nặng của khách, khá nhanh. Theo dõi sát, nếu khách mệt, chóng mặt, mất ngủ thì chuyển về 0,5 kg/tuần.`;
     c.prot=Math.round((c.bmi>=30?Math.max(c.tw,c.w*.85):c.w)*1.8);
   }else{
-    c.kcal=r10(c.tdee+Math.min(c.pace,500));c.walk=0;
+    c.kcal=r10(c.tdee+c.pace);c.walk=0;
     c.delta=c.kcal-c.tdee;
     c.prot=Math.round(c.w*1.8);
   }
@@ -801,7 +804,7 @@ function render(){
       const mk=m.its.reduce((a,i)=>a+kOf(i),0),mp=m.its.reduce((a,i)=>a+pOf(i),0);
       const rows=m.its.map(i=>i.custom?`<div class="food"><span class="fn">${esc(i.n)}</span><span class="fg">${i.g}</span><span class="fe">${i.e}</span></div>`:
         `<div class="food"><span class="fn">${i.name||i.f.n}</span><span class="fg">${i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g'}</span><span class="fe">${eye(i.f.v,i.g,i.name||i.f.n)}</span></div>`).join('');
-      const tip=m.slot==='lu'||m.slot==='di'?'<div class="mf">Ăn rau trước, rồi đến thịt cá, cuối cùng là tinh bột. Nấu hấp, luộc hoặc áp chảo với dầu ô liu, dùng đúng lượng dầu ghi trong thực đơn.</div>':'';
+      const tip=m.slot==='lu'||m.slot==='di'?'<div class="mf">'+(c.goal==='gain'?'Ăn cơm và thịt cá trước, rau sau để không bị no sớm.':'Ăn rau trước, rồi đến thịt cá, cuối cùng là tinh bột.')+' Nấu hấp, luộc hoặc áp chảo với dầu ô liu, dùng đúng lượng dầu ghi trong thực đơn.</div>':'';
       const own=(bySlot[m.slot]||[]).filter(v=>!SHAKE.includes(v.id));
       const pre=m.slot==='di'?vitCard('walk')+vitCard('pdi'):'';
       return `${pre}<div class="meal-card"><div class="mh"><b>${SLOTS[m.slot].t} · ${SLOTS[m.slot].n}</b><span>~${fmt(r10(mk))} kcal · ${Math.round(mp)} g đạm</span></div>${rows}${vitRows(own,'Dùng kèm trong bữa')}${vitRows(bySlot[AFTER[m.slot]],'Sau bữa uống ('+(SLOTS[AFTER[m.slot]]||{}).t+')')}${tip}</div>`;
@@ -973,6 +976,8 @@ function save(){
 function load(){
   let raw='';try{raw=localStorage.getItem('giaoan-nutrilite')||''}catch(_){}
   const q=new URLSearchParams(raw);
+  R.forEach(k=>{if(k==='goal'){const el=document.querySelector(`input[name=goal][value="${CSS.escape(q.get('goal')||'')}"]`);if(el)el.checked=true;}});
+  buildPace();lastGoal=radio('goal');
   F.forEach(k=>{if(q.has(k))$(k).value=q.get(k)});
   R.forEach(k=>{const el=document.querySelector(`input[name=${k}][value="${CSS.escape(q.get(k)||'')}"]`);if(el)el.checked=true});
   if(q.has('u')){state.use=new Set(q.get('u').split('.').filter(id=>PRODUCTS.some(p=>p.id===id)));state.touched=true;}
@@ -982,12 +987,23 @@ function load(){
   if(q.get('cu')) state.custom=q.get('cu').split('|').map(s=>{const [n,sl,h]=s.split('~');return {n,s:SLOTS[sl]?sl:'abf',h:h==='1'}}).filter(c=>c.n);
   if(q.get('fw')) state.fw=q.get('fw').split('_');
   if(q.get('fe')) state.fe=q.get('fe').split('_');
-  if($('pace').selectedIndex<0||!$('pace').value) $('pace').value='770';
+  if($('pace').selectedIndex<0||!$('pace').value) $('pace').value=radio('goal')==='cut'?'770':'550';
   if(!$('start').value){const d=new Date();$('start').value=d.toISOString().slice(0,10);}
 }
 
 /* Sự kiện */
-$('f').addEventListener('input',()=>render());
+const PACES={
+  cut:[['330','Nhẹ nhàng: giảm 0,3 kg/tuần, dễ duy trì'],['550','Vừa phải: giảm 0,5 kg/tuần'],['770','Gấp rút: giảm 0,7 kg/tuần, ăn kiêng kết hợp đi bộ']],
+  gain:[['330','Chậm và chắc: tăng 0,3 kg/tuần, ít tăng mỡ'],['550','Vừa phải: tăng 0,5 kg/tuần'],['770','Nhanh: tăng 0,7 kg/tuần, dễ tăng mỡ bụng']]};
+function buildPace(reset){const g=radio('goal'),cur=reset?'':$('pace').value;
+  $('pace').innerHTML=PACES[g].map(([v,t])=>`<option value="${v}">${t}</option>`).join('');
+  $('pace').value=PACES[g].some(([v])=>v===cur)?cur:(g==='cut'?'770':'550');}
+let lastGoal=null;
+$('f').addEventListener('input',e=>{
+  if(e.target.id==='w'||e.target.id==='tw'){const w=+$('w').value,tw=+$('tw').value;
+    if(w&&tw){const g=tw>w?'gain':tw<w?'cut':null;if(g&&g!==radio('goal'))document.querySelector(`input[name=goal][value=${g}]`).checked=true;}}
+  if(radio('goal')!==lastGoal){lastGoal=radio('goal');buildPace(true);state.touched=false;}
+  render();});
 $('q').addEventListener('input',renderResults);
 function addSet(sid){const st=SETS.find(x=>x.id===sid);if(!st)return;state.touched=true;
   st.items.forEach(id=>{if(!hasAny(state.use,id))state.use.add(id)});
