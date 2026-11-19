@@ -850,7 +850,7 @@ function renderResult(c){
     <div class="rbig">
       <div><b>${dec(p)} kg</b><span>Cân nặng dự kiến</span></div>
       <div><b>${sign}${dec(lo)}–${dec(hi)} kg</b><span>${c.goal==='cut'?'Giảm':'Tăng'} được</span></div>
-      <div><b>${c.goal==='cut'?(c.waist?dec(c.waist-waist)+' cm':'−'+dec(waist*.8,0)+'–'+dec(waist*1.2,0)+' cm'):dec(Math.min(100,chg/c.diff*100||100),0)+'%'}</b><span>${c.goal==='cut'?(c.waist?'Vòng eo dự kiến':'Vòng eo nhỏ đi'):'Chặng đường đã đi'}</span></div>
+      <div><b>${c.goal==='cut'?(c.waist?dec(c.waist-waist)+' cm':'−'+dec(waist*.8,1)+'–'+dec(waist*1.2,1)+' cm'):dec(Math.min(100,chg/c.diff*100||100),0)+'%'}</b><span>${c.goal==='cut'?(c.waist?'Vòng eo dự kiến':'Vòng eo nhỏ đi'):'Chặng đường đã đi'}</span></div>
     </div>
     <ul>${FEEL[c.goal][k].map(t=>`<li>${t}</li>`).join('')}</ul>
     ${p===c.tw?'<b>🎉 Khách có thể đạt cân nặng mục tiêu trong khoảng thời gian này.</b>':''}`;
