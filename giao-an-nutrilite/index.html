@@ -131,6 +131,8 @@ details.all .prods{border:0;border-top:1px solid var(--line);border-radius:0 0 1
 .pst .pwho div{background:#fff;border:2px solid #EED9C8;border-radius:20px;padding:14px 20px}
 .pst .pwho span{display:block;font-size:20px;color:#6E5546}
 .pst .pwho b{display:block;font:800 32px Lexend,Arial,sans-serif;color:#2A1A12;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pst .ptips{margin:0;padding:28px 32px 28px 64px;background:#fff;border:2px solid #EED9C8;border-radius:26px;display:flex;flex-direction:column;gap:20px;font-size:28px;line-height:1.5}
+.pst .ptips b{color:#C2461A}
 .pst h2{font:700 34px Lexend,Arial,sans-serif;margin:0}
 .pst .pft{margin-top:auto;font-size:20px;color:#6E5546;border-top:2px solid #EED9C8;padding-top:18px;display:flex;justify-content:space-between;gap:20px}
 @media (max-width:520px){.imgs{grid-template-columns:minmax(0,1fr)}}
@@ -369,9 +371,9 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 
     <section class="no-print">
       <h2 id="dl">Tải giáo án gửi khách</h2>
-      <p class="note">Tạo 8 ảnh có họ tên, cân nặng và mục tiêu của khách: 1 ảnh tổng quan (calo, lịch dùng sản phẩm, kết quả dự kiến) và 7 ảnh thực đơn từng ngày kèm vitamin.</p>
+      <p class="note">Tạo 9 ảnh (thêm 1 ảnh lưu ý) có họ tên, cân nặng và mục tiêu của khách: 1 ảnh tổng quan (calo, lịch dùng sản phẩm, kết quả dự kiến) và 7 ảnh thực đơn từng ngày kèm vitamin.</p>
       <p class="note" id="save-how"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" id="mk-img">Tạo ảnh giáo án</button><button type="button" class="alt" id="dl-all" hidden>Tải cả 8 ảnh</button></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" id="mk-img">Tạo ảnh giáo án</button><button type="button" class="alt" id="dl-all" hidden>Tải cả 9 ảnh</button></div>
       <p class="note" id="img-msg" role="status"></p>
       <div class="imgs" id="imgs"></div>
     </section>
@@ -937,7 +939,7 @@ function renderTips(c,sel){
   if(c.goal==='cut'){
     t.push('Đi bộ 7.000–10.000 bước mỗi ngày. Nếu được, tập tạ hoặc bài tập sức mạnh 2–3 buổi mỗi tuần để giảm mỡ mà giữ cơ.');
     t.push('Không bỏ bữa phụ. Bữa phụ giúp không quá đói vào bữa chính và không ăn quá tay.');
-    t.push('Kiêng nước ngọt, trà sữa, bia rượu, đồ chiên. Ăn ngoài thì chọn món luộc, hấp, ước lượng bằng bàn tay như trên.');
+    t.push('Kiêng nước ngọt, trà sữa, bia rượu, đồ chiên. Ăn ngoài thì chọn món luộc, hấp, ăn đúng số chén, miếng như thực đơn.');
   }else{
     t.push('Tập tạ 3–4 buổi mỗi tuần để cân tăng lên là cơ, không chỉ là mỡ.');
     t.push('Khó ăn nhiều thì uống bớt calo: sữa, sinh tố chuối với Protein, bơ đậu phộng.');
@@ -1114,11 +1116,16 @@ function posterCover(){
     <h2>Kết quả dự kiến</h2><div class="pr">${res}</div>
     <div class="pft"><span>Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.</span></div></div>`;
 }
+function posterTips(){
+  const items=[...document.querySelectorAll('#tips li')].filter(li=>!/Đang chọn|Chưa chọn/.test(li.textContent)).map(li=>`<li>${li.innerHTML}</li>`).join('');
+  return `<div class="pst">${posterHead(LAST.c,'Kết hợp sao cho hiệu quả','',false)}<ul class="ptips">${items}</ul>
+    <div class="pft"><span>Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.</span></div></div>`;
+}
 const IMGS=[],URLS=[];
 /* Trong khung xem của Claude, trình duyệt chặn tải file. Mở trang ở trình duyệt thường thì tải được. */
 const TOP=(()=>{try{return window.self===window.top}catch(_){return false}})();
 let DLNS=null,CAN_DL=TOP;
-function setHow(){$('save-how').textContent=CAN_DL?'Tạo xong bấm "Tải cả 8 ảnh" để lưu vào máy (hoặc "Tải ảnh" dưới từng ảnh), rồi gửi qua Zalo.':'Tạo xong thì nhấn giữ vào ảnh (điện thoại) hoặc chuột phải (máy tính) rồi chọn Lưu ảnh. Hoặc bấm Sao chép rồi dán vào Zalo.';}
+function setHow(){$('save-how').textContent=CAN_DL?'Tạo xong bấm "Tải cả 9 ảnh" để lưu vào máy (hoặc "Tải ảnh" dưới từng ảnh), rồi gửi qua Zalo.':'Tạo xong thì nhấn giữ vào ảnh (điện thoại) hoặc chuột phải (máy tính) rồi chọn Lưu ảnh. Hoặc bấm Sao chép rồi dán vào Zalo.';}
 if(!TOP&&window.claude&&window.claude.use){window.claude.use('downloads').then(ns=>{if(ns){DLNS=ns;CAN_DL=true;setHow();
   document.querySelectorAll('#imgs figcaption [data-copy]').forEach((b,i)=>{if(!b.parentNode.querySelector('[data-dl]'))b.insertAdjacentHTML('beforebegin',`<button type="button" class="dlbtn" data-dl="${i}">Tải ảnh</button>`)});
   if(URLS.length)$('dl-all').hidden=false;}}).catch(()=>{});}
@@ -1140,7 +1147,7 @@ $('mk-img').addEventListener('click',async()=>{
   if(!window.html2canvas){$('img-msg').textContent='Chưa tải được công cụ tạo ảnh. Kiểm tra mạng rồi thử lại.';return;}
   const btn=$('mk-img');btn.disabled=true;$('imgs').innerHTML='';IMGS.length=0;URLS.length=0;$('dl-all').hidden=true;
   try{await document.fonts.ready}catch(_){}
-  const list=[['Tổng quan',posterCover()],...DAYS.map((d,i)=>['Thực đơn '+d,posterDay(i)])];
+  const list=[['Tổng quan',posterCover()],...DAYS.map((d,i)=>['Thực đơn '+d,posterDay(i)]),['Lưu ý',posterTips()]];
   const host=$('poster-host');
   try{
     for(let i=0;i<list.length;i++){
@@ -1154,7 +1161,7 @@ $('mk-img').addEventListener('click',async()=>{
       fig.innerHTML=`<img src="${url}" alt="${list[i][0]}"><figcaption><span>${i+1}. ${list[i][0]}</span><span style="display:flex;gap:6px">${CAN_DL?`<button type="button" class="dlbtn" data-dl="${i}">Tải ảnh</button>`:''}<button type="button" class="alt" data-copy="${i}">Sao chép</button></span></figcaption>`;
       $('imgs').appendChild(fig);
     }
-    $('img-msg').textContent=CAN_DL?'Đã tạo xong 8 ảnh. Bấm "Tải cả 8 ảnh" hoặc "Tải ảnh" dưới từng ảnh.':'Đã tạo xong 8 ảnh. Nhấn giữ (điện thoại) hoặc chuột phải (máy tính) vào ảnh, chọn Lưu ảnh.';
+    $('img-msg').textContent=CAN_DL?'Đã tạo xong 9 ảnh. Bấm "Tải cả 9 ảnh" hoặc "Tải ảnh" dưới từng ảnh.':'Đã tạo xong 9 ảnh. Nhấn giữ (điện thoại) hoặc chuột phải (máy tính) vào ảnh, chọn Lưu ảnh.';
     $('dl-all').hidden=!CAN_DL;
   }catch(err){$('img-msg').textContent='Không tạo được ảnh: '+err.message;}
   host.innerHTML='';btn.disabled=false;btn.textContent='Tạo lại ảnh';
