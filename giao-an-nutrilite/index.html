@@ -43,6 +43,16 @@ input:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
 .seg label:has(input:checked){border-color:var(--accent);background:var(--accent-soft);color:var(--accent)}
 .seg label:has(input:focus-visible){outline:2px solid var(--accent)}
 .goalseg label{padding:14px 8px;font:700 1rem var(--display)}
+.up{display:flex;flex-direction:column;gap:10px}
+.up-intro{color:var(--muted)}
+.cmp{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.cmp div{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px;min-width:0}
+.cmp div.hl{border-color:var(--accent);background:var(--accent-soft)}
+.cmp b{display:block;font:700 .95rem var(--display)}
+.cmp span{font-size:.85rem;color:var(--muted)}
+.up-item{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+.up-item b{font-family:var(--display)}
+.up-item p{font-size:.88rem;color:var(--muted);margin-top:2px}
 .legend{font-weight:600;font-size:.9rem;margin-bottom:6px}
 .hint{font-size:.82rem;color:var(--muted);font-weight:400}
 .err{color:var(--accent);font-weight:600;font-size:.9rem}
@@ -248,6 +258,10 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
       <label><input type="radio" name="goal" value="cut" checked><span>⬇️ Giáo án giảm cân</span></label>
       <label><input type="radio" name="goal" value="gain"><span>⬆️ Giáo án tăng cân</span></label>
     </div>
+    <div class="seg" role="radiogroup" aria-label="Khách có dùng sản phẩm không">
+      <label><input type="radio" name="mode" value="prod" checked><span>Khách dùng sản phẩm</span></label>
+      <label><input type="radio" name="mode" value="free"><span>Chưa dùng: giáo án tặng</span></label>
+    </div>
     <p class="hint" style="margin-top:-6px">Nhập cân nặng mục tiêu cao hơn hiện tại thì trang tự chuyển sang tăng cân, thấp hơn thì giảm cân.</p>
     <div class="grid">
       <label class="full">Tên khách hàng<input id="name" type="text" maxlength="40" placeholder="VD: Chị Lan" autocomplete="off"></label>
@@ -284,12 +298,13 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
   <!-- 2. Sản phẩm -->
   <div class="panel no-print">
     <div class="panel-h">
-      <h2>2. Sản phẩm Nutrilite</h2>
+      <h2 id="prod-h">2. Sản phẩm Nutrilite</h2>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button type="button" class="sm" id="pick-rec">Chọn theo gợi ý</button>
         <button type="button" class="sm alt" id="pick-none">Bỏ chọn hết</button>
       </div>
     </div>
+    <p class="notice" id="free-note" hidden>Giáo án tặng: thực đơn chỉ dùng thực phẩm thường. Sản phẩm chọn ở đây sẽ hiện ở phần <b>Gợi ý nâng cấp</b> cuối giáo án và trong 1 ảnh riêng, để khách tham khảo.</p>
     <div class="search">
       <label class="legend" for="q">Tìm và thêm sản phẩm</label>
       <input id="q" type="search" placeholder="Gõ tên, mã hàng hoặc công dụng: omega, canxi, bộ bodykey..." autocomplete="off">
@@ -323,7 +338,7 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
     <div class="notice" id="clamp" hidden></div>
 
     <section>
-      <h2>Sản phẩm trong giáo án</h2>
+      <h2 id="sec-prod-h">Sản phẩm trong giáo án</h2>
       <div class="chips" id="sum-have"></div>
       <div class="chips" id="sum-need"></div>
     </section>
@@ -370,9 +385,9 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
 
     <section class="no-print">
       <h2 id="dl">Tải giáo án gửi khách</h2>
-      <p class="note">Tạo 9 ảnh (thêm 1 ảnh lưu ý) có họ tên, cân nặng và mục tiêu của khách: 1 ảnh tổng quan (calo, lịch dùng sản phẩm, kết quả dự kiến) và 7 ảnh thực đơn từng ngày kèm vitamin.</p>
+      <p class="note">Tạo 9–10 ảnh (thêm ảnh lưu ý, và ảnh gợi ý nâng cấp nếu là giáo án tặng) có họ tên, cân nặng và mục tiêu của khách: 1 ảnh tổng quan (calo, lịch dùng sản phẩm, kết quả dự kiến) và 7 ảnh thực đơn từng ngày kèm vitamin.</p>
       <p class="note" id="save-how"></p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" id="mk-img">Tạo ảnh giáo án</button><button type="button" class="alt" id="dl-all" hidden>Tải cả 9 ảnh</button></div>
+      <div style="display:flex;gap:10px;flex-wrap:wrap"><button type="button" id="mk-img">Tạo ảnh giáo án</button><button type="button" class="alt" id="dl-all" hidden>Tải tất cả ảnh</button></div>
       <p class="note" id="img-msg" role="status"></p>
       <div class="imgs" id="imgs"></div>
     </section>
@@ -380,6 +395,11 @@ ul.tips{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
     <section>
       <h2>Kết hợp sao cho hiệu quả</h2>
       <ul class="tips" id="tips"></ul>
+    </section>
+
+    <section id="up-sec" hidden>
+      <h2 id="up-h">Gợi ý nâng cấp</h2>
+      <div id="upsell" class="up"></div>
     </section>
 
     <div class="actions">
@@ -491,6 +511,30 @@ const SETS=[
   {id:'s-lt',c:'304044',n:'Bộ Dinh Dưỡng Chăm Sóc Người Lớn Tuổi',items:['vb','cm','om'],note:'Vitamin B, Cal Mag D, Omega-3'},
   {id:'s-te',c:'320849',n:'Bộ Dinh Dưỡng Nền Tảng Trẻ Em',items:['kd','kom','prc'],note:'Kids Daily, Nutrikids Omega-3 Jelly, Protein vị sô cô la'}
 ];
+/* Lời giới thiệu cho khách (phần gợi ý nâng cấp) */
+const PITCH={
+  bk:{cut:'Thay bữa sáng, pha 1 phút là xong: 205 kcal, 17 g đạm thực vật, 5 g chất xơ, 22 vitamin và khoáng chất. Dễ kiểm soát calo, no lâu tới trưa.'},
+  bkn:{cut:'BodyKey dạng ngũ cốc cho người thích ăn nhai, dùng thay bữa sáng.'},
+  pr:{cut:'Bổ sung đạm thực vật, pha vào bữa sáng giúp no lâu và giữ cơ khi ăn ít calo.',gain:'Thêm đạm dễ uống, đủ đạm để tăng cơ mà không phải ăn quá nhiều.'},
+  prc:{cut:'Đạm đậu nành vị sô cô la, dễ uống.',gain:'Đạm đậu nành vị sô cô la, pha sữa uống bữa phụ để thêm đạm.'},
+  sp:{cut:'Đạm đậu nành vị trà xanh, dễ uống.',gain:'Đạm đậu nành vị trà xanh, thêm đạm ở bữa phụ.'},
+  da:{cut:'Ăn kiêng dễ thiếu vitamin và khoáng chất. 1 viên mỗi ngày giúp bù đủ.',gain:'1 viên mỗi ngày bù đủ vitamin và khoáng chất nền tảng.'},
+  dx:{cut:'Vitamin, khoáng chất và dưỡng chất thực vật liều cao cho người muốn chăm sóc toàn diện.'},
+  vb:{cut:'Vitamin nhóm B hỗ trợ chuyển hóa năng lượng, giúp đỡ mệt khi ăn ít.',gain:'Vitamin nhóm B hỗ trợ chuyển hóa năng lượng từ thức ăn.'},
+  vc:{cut:'Bổ sung vitamin C, hỗ trợ sức đề kháng.'},
+  om:{cut:'Bổ sung omega-3 tốt cho tim mạch, não bộ khi ăn ít cá béo.'},
+  fi:{cut:'Chất xơ hòa tan pha nước uống trước bữa tối, giúp nhanh no, ăn ít lại và hỗ trợ tiêu hóa.'},
+  pb:{cut:'Lợi khuẩn hỗ trợ tiêu hóa khi thay đổi chế độ ăn.',gain:'Lợi khuẩn hỗ trợ tiêu hóa, giúp ăn được nhiều hơn.'},
+  cm:{cut:'Bổ sung canxi, magie, vitamin D giúp xương chắc khi ăn ít sữa.',gain:'Bổ sung canxi, magie, vitamin D cho xương khi tập luyện.'},
+  fe:{cut:'Bổ sung sắt và axit folic, nhất là cho phụ nữ.'},
+  zn:{cut:'Bổ sung kẽm, hỗ trợ sức đề kháng.'},
+  gt:{cut:'Hỗ trợ giảm mỡ cơ thể và chống oxy hóa, dùng kèm ăn uống và vận động.'},
+  cb:{cut:'Hỗ trợ hạn chế hấp thu chất bột đường, hợp với người khó bớt cơm.'},
+  jh:{cut:'Hỗ trợ khớp khi bắt đầu vận động.'},
+  co:{cut:'Hỗ trợ tim mạch.'},ve:{cut:'Chống oxy hóa, hỗ trợ da.'},lh:{cut:'Hỗ trợ gan.'},vh:{cut:'Hỗ trợ mắt.'},
+  el:{cut:'Bù điện giải khi tập luyện, ra nhiều mồ hôi.'},col:{cut:'Collagen peptide hỗ trợ làm đẹp da.'}
+};
+const pitch=(p,g)=>(PITCH[p.id]&&(PITCH[p.id][g]||PITCH[p.id].cut))||p.why[g].split('. ')[0]+'.';
 /* Sản phẩm thay thế nhau trong bữa sáng */
 const ALIAS={bkn:'bk',prc:'pr',sp:'pr'};
 const hasAny=(set,id)=>set.has(id)||Object.entries(ALIAS).some(([k,v])=>v===id&&set.has(k));
@@ -608,7 +652,7 @@ function buildDay(d,c,P){
     // Bữa sáng
     let bf;
     if(useBk||usePr){bf=shake();if(!useBk) bf.push(item('trung',100),item('bread',40));}
-    else bf=[item('trung',100),item('bread',50),item('milk',220)];
+    else bf=[item('trung',100),item('bread',40),item('milk',180)];
     meals.push({slot:'bf',its:bf});
     meals.push({slot:'s1',its:[Object.assign(item('fruit',150),{name:MENU.fr[d]})]});
     meals.push({slot:'s2',its:[item('yog',100),item('nut',15)]});
@@ -639,7 +683,7 @@ function buildDay(d,c,P){
     const fixedP=meals.reduce((s,m)=>s+m.its.reduce((a,i)=>a+(i.custom?i.p:protOf(i)),0),0);
     const rest=c.kcal-fixed,pt=Math.max((c.prot-fixedP)/2,30);
     const lu=mainMeal(rest*.52,MENU.luP[d],'rice',Math.min(Math.max(pt,35),50),10,150,300);lu[2].name=MENU.luV[d];
-    const di=mainMeal(rest*.48,MENU.diP[d]==='dau'?'trung':MENU.diP[d],'rice',Math.min(Math.max(pt,35),50),10,150,300);di[2].name=MENU.diV[d];
+    const di=mainMeal(rest*.48,MENU.diP[d]==='dau'?'heo':MENU.diP[d],'rice',Math.min(Math.max(pt,35),50),10,150,300);di[2].name=MENU.diV[d];
     meals.push({slot:'lu',its:lu},{slot:'di',its:di});
   }
   const order=['bf','s1','lu','s2','di'];
@@ -695,9 +739,13 @@ function predict(c,k){
 /* Danh sách sản phẩm */
 const BADGE=lv=>lv===1?'<span class="badge b1">CHỦ LỰC</span>':lv===2?'<span class="badge b2">NÊN DÙNG</span>':lv===3?'<span class="badge b3">TÙY CHỌN</span>':'';
 const slotNames=p=>p.slots.map(x=>SLOTS[x].t+' '+SLOTS[x].n.toLowerCase()).join(', ');
-let lastC={};
+let lastC={},EFF=new Set();
 function renderProducts(c){
   lastC=c;
+  const free=radio('mode')==='free';
+  $('prod-h').textContent=free?'2. Sản phẩm gợi ý nâng cấp':'2. Sản phẩm Nutrilite';
+  $('free-note').hidden=!free;
+  document.getElementById('sec-prod-h').parentNode.hidden=free;
   const goal=c.goal||'cut';
   // Đã chọn
   let html='';
@@ -782,12 +830,13 @@ function render(){
   $('clamp').hidden=!c.clamp;$('clamp').textContent=c.clamp;
   if((c.goal==='cut'&&c.tw>=c.w)||(c.goal==='gain'&&c.tw<=c.w)){$('clamp').hidden=false;$('clamp').textContent='Cân nặng mục tiêu chưa khớp với mục tiêu '+(c.goal==='cut'?'giảm':'tăng')+' cân. Kiểm tra lại ô cân nặng mục tiêu.';}
 
-  const sel=selectedList();
+  const FREE=radio('mode')==='free';EFF=FREE?new Set():state.use;
+  const sel=FREE?[]:selectedList();
   $('sum-have').innerHTML=`<span class="chip" style="border:0;background:none;padding-left:0">Khách đã có:</span>`+(sel.filter(s=>s.have).map(s=>`<span class="chip ok">✓ ${esc(s.n)}</span>`).join('')||'<span class="chip">Chưa có sản phẩm nào</span>');
   $('sum-need').innerHTML=`<span class="chip" style="border:0;background:none;padding-left:0">Cần bổ sung:</span>`+(sel.filter(s=>!s.have).map(s=>`<span class="chip need">+ ${esc(s.n)}</span>`).join('')||'<span class="chip">Không cần mua thêm</span>');
 
   // Thực đơn
-  const P={use:state.use,nut:state.nut};
+  const P={use:EFF,nut:state.nut};
   const days=DAYS.map((_,d)=>buildDay(d,c,P));
   const kOf=i=>i.custom?i.k:kcalOf(i), pOf=i=>i.custom?i.p:protOf(i);
   $('tabs').innerHTML=DAYS.map((d,i)=>`<button type="button" role="tab" aria-selected="${i===curDay}" data-day="${i}">${d}</button>`).join('');
@@ -814,8 +863,8 @@ function render(){
   // Lịch trong ngày
   const meal0=days[0];
   const mealText=sl=>{const m=meal0.find(x=>x.slot===sl);if(!m)return '';
-    if(sl==='bf'&&c.goal==='cut'&&(hasAny(state.use,'bk')||hasAny(state.use,'pr'))) return 'Lắc '+[hasAny(state.use,'bk')&&bkLabel(state.use),hasAny(state.use,'pr')&&prLabel(state.use)].filter(Boolean).join(' + ')+' với 250 ml nước. Xem gram ở thực đơn.';
-    if(sl==='di'&&c.goal==='cut'&&c.shakes===2&&hasAny(state.use,'bk')) return bkLabel(state.use)+(hasAny(state.use,'pr')?' + Protein':'')+' và 1 đĩa rau luộc.';
+    if(sl==='bf'&&c.goal==='cut'&&(hasAny(EFF,'bk')||hasAny(EFF,'pr'))) return 'Lắc '+[hasAny(EFF,'bk')&&bkLabel(EFF),hasAny(EFF,'pr')&&prLabel(EFF)].filter(Boolean).join(' + ')+' với 250 ml nước. Xem gram ở thực đơn.';
+    if(sl==='di'&&c.goal==='cut'&&c.shakes===2&&hasAny(EFF,'bk')) return bkLabel(EFF)+(hasAny(EFF,'pr')?' + Protein':'')+' và 1 đĩa rau luộc.';
     return m.its.filter(i=>!i.custom&&i.f.v!=='oil').map(i=>(i.name||i.f.n).split(' (')[0]+' '+(i.f.v==='milk'?i.g+' ml':i.f.v==='egg'?Math.round(i.g/50)+' quả':i.g+' g')).join(' · ')+' (thực đơn Thứ 2)';};
   const slotOrder=['wake','bf','abf','s1','lu','alu','s2','walk','pdi','di','adi','bed'];
   const extra={wake:'Uống 1–2 ly nước ấm (300–500 ml).',bed:'Ngủ trước 23:00, đủ 7–8 tiếng.',pdi:'Uống 1 ly nước lớn.'};
@@ -832,6 +881,7 @@ function render(){
   renderResult(c);
   renderFollow(c);
   renderTips(c,sel);
+  renderUpsell(c,FREE);
 }
 
 const FEEL={
@@ -925,7 +975,7 @@ function renderTips(c,sel){
   const t=[];
   if(c.goal==='cut'){
     if(has('bk')) t.push('<b>BodyKey + Protein buổi sáng</b> là bữa chủ lực: đủ đạm (khoảng '+Math.round(state.nut.bk.p+(has('pr')?state.nut.pr.p:0))+' g) mà chỉ khoảng '+fmt(state.nut.bk.kcal+(has('pr')?state.nut.pr.kcal:0))+' kcal, giúp no tới trưa.');
-    if(!has('bk')) t.push('Chưa chọn BodyKey: bữa sáng đang dùng trứng và bánh mì. Thêm BodyKey giúp kiểm soát calo bữa sáng dễ hơn.');
+    if(!has('bk')&&radio('mode')!=='free') t.push('Chưa chọn BodyKey: bữa sáng đang dùng trứng và bánh mì. Thêm BodyKey giúp kiểm soát calo bữa sáng dễ hơn.');
   }else if(has('pr')) t.push('<b>Protein</b> pha vào sữa ở bữa sáng và bữa phụ để thêm đạm mà không phải ăn thêm nhiều.');
   if(has('cb')) t.push('<b>CB Plus</b> dùng ở bữa trưa và bữa tối, là các bữa có cơm, bún, khoai. Vẫn giữ đúng số gram tinh bột trong thực đơn.');
   if(has('gt')) t.push('<b>GreenTrim</b> dùng kèm chế độ ăn và vận động trong giáo án. Sản phẩm chỉ hỗ trợ, cân giảm chủ yếu nhờ thâm hụt calo.');
@@ -959,7 +1009,7 @@ function applyRec(c,touch=true){
 }
 
 /* Lưu vào link */
-const F=['name','age','h','w','tw','waist','start','act','pace'],R=['sex','goal','shakes'];
+const F=['name','age','h','w','tw','waist','start','act','pace'],R=['sex','goal','shakes','mode'];
 function save(){
   const q=new URLSearchParams();
   F.forEach(k=>{if($(k).value)q.set(k,$(k).value)});
@@ -1074,7 +1124,8 @@ function planText(){
     });
   });
   L.push('','LƯU Ý');
-  document.querySelectorAll('#tips li').forEach(li=>L.push('• '+li.textContent));
+  document.querySelectorAll('#tips li').forEach(li=>{if(!/Đang chọn|Chưa chọn/.test(li.textContent))L.push('• '+li.textContent)});
+  if(radio('mode')==='free'&&state.use.size){const u=upsellData(c);L.push('',u.title.toUpperCase(),u.intro);if(u.cmp)L.push('• Bữa sáng hiện tại: '+u.cmp.now,'• Bữa sáng với BodyKey: '+u.cmp.up);u.items.forEach(p=>L.push('• '+p.n+': '+pitch(p,c.goal)));}
   L.push('','Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.');
   return L.join('\n');
 }
@@ -1132,6 +1183,35 @@ function posterCover(){
     <h2>Kết quả dự kiến</h2><div class="pr">${res}</div>
     <div class="pft"><span>Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.</span></div></div>`;
 }
+function upsellData(c){
+  const items=PRODUCTS.filter(p=>state.use.has(p.id));
+  let cmp=null;
+  if(c.goal==='cut'&&hasAny(state.use,'bk')){
+    const bf=buildDay(0,c,{use:new Set(),nut:state.nut}).find(m=>m.slot==='bf');
+    const nk=bf.its.reduce((a,i)=>a+(i.custom?i.k:kcalOf(i)),0),np=bf.its.reduce((a,i)=>a+(i.custom?i.p:protOf(i)),0);
+    const sk=state.nut.bk.kcal+(hasAny(state.use,'pr')?state.nut.pr.kcal:0),spp=state.nut.bk.p+(hasAny(state.use,'pr')?state.nut.pr.p:0);
+    cmp={now:`${bf.its.map(i=>(i.name||i.f.n).toLowerCase()).join(', ')}: khoảng ${fmt(r10(nk))} kcal, ${Math.round(np)} g đạm, phải chuẩn bị`,
+         up:`${bkLabel(state.use)}${hasAny(state.use,'pr')?' + Protein':''}: khoảng ${fmt(sk)} kcal, ${spp} g đạm, thêm chất xơ và 22 vitamin, khoáng chất. Pha 1 phút.`};
+  }
+  const intro=c.goal==='cut'?'Giáo án này đã đủ để giảm cân bằng thực phẩm thường. Nếu muốn dễ làm và đủ chất hơn, có thể dùng thêm:':'Giáo án này đã đủ để tăng cân bằng thực phẩm thường. Nếu khó ăn đủ đạm và vi chất, có thể dùng thêm:';
+  return {items,cmp,intro,title:c.goal==='cut'?'Muốn giảm cân dễ hơn?':'Muốn tăng cân dễ hơn?'};
+}
+function renderUpsell(c,free){
+  const u=upsellData(c),show=free&&u.items.length>0;
+  $('up-sec').hidden=!show;if(!show)return;
+  $('up-h').textContent=u.title;
+  $('upsell').innerHTML=`<p class="up-intro">${u.intro}</p>`+
+    (u.cmp?`<div class="cmp"><div><b>Bữa sáng hiện tại</b><span>${esc(u.cmp.now)}</span></div><div class="hl"><b>Bữa sáng với BodyKey</b><span>${esc(u.cmp.up)}</span></div></div>`:'')+
+    u.items.map(p=>`<div class="up-item"><b>${esc(p.n)}</b><p>${esc(pitch(p,c.goal))}</p></div>`).join('')+
+    `<p class="note">Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.</p>`;
+}
+function posterUpsell(){
+  const c=LAST.c,u=upsellData(c);
+  return `<div class="pst">${posterHead(c,u.title,'',false)}<div class="ps" style="margin-top:-8px">${u.intro}</div>
+    ${u.cmp?`<div class="pr" style="grid-template-columns:1fr 1fr"><div><i>Bữa sáng hiện tại</i>${esc(u.cmp.now)}</div><div style="border-color:#C2461A;background:#F6D3BE"><i>Bữa sáng với BodyKey</i>${esc(u.cmp.up)}</div></div>`:''}
+    <ul class="ptips">${u.items.map(p=>`<li><b>${esc(p.n)}</b>: ${esc(pitch(p,c.goal))}</li>`).join('')}</ul>
+    <div class="pft"><span>Nhắn coach để được tư vấn sản phẩm phù hợp. Thực phẩm bảo vệ sức khỏe không phải là thuốc và không có tác dụng thay thế thuốc chữa bệnh.</span></div></div>`;
+}
 function posterTips(){
   const items=[...document.querySelectorAll('#tips li')].filter(li=>!/Đang chọn|Chưa chọn/.test(li.textContent)).map(li=>`<li>${li.innerHTML}</li>`).join('');
   return `<div class="pst">${posterHead(LAST.c,'Kết hợp sao cho hiệu quả','',false)}<ul class="ptips">${items}</ul>
@@ -1141,7 +1221,7 @@ const IMGS=[],URLS=[];
 /* Trong khung xem của Claude, trình duyệt chặn tải file. Mở trang ở trình duyệt thường thì tải được. */
 const TOP=(()=>{try{return window.self===window.top}catch(_){return false}})();
 let DLNS=null,CAN_DL=TOP;
-function setHow(){$('save-how').textContent=CAN_DL?'Tạo xong bấm "Tải cả 9 ảnh" để lưu vào máy (hoặc "Tải ảnh" dưới từng ảnh), rồi gửi qua Zalo.':'Tạo xong thì nhấn giữ vào ảnh (điện thoại) hoặc chuột phải (máy tính) rồi chọn Lưu ảnh. Hoặc bấm Sao chép rồi dán vào Zalo.';}
+function setHow(){$('save-how').textContent=CAN_DL?'Tạo xong bấm "Tải tất cả ảnh" để lưu vào máy (hoặc "Tải ảnh" dưới từng ảnh), rồi gửi qua Zalo.':'Tạo xong thì nhấn giữ vào ảnh (điện thoại) hoặc chuột phải (máy tính) rồi chọn Lưu ảnh. Hoặc bấm Sao chép rồi dán vào Zalo.';}
 if(!TOP&&window.claude&&window.claude.use){window.claude.use('downloads').then(ns=>{if(ns){DLNS=ns;CAN_DL=true;setHow();
   document.querySelectorAll('#imgs figcaption [data-copy]').forEach((b,i)=>{if(!b.parentNode.querySelector('[data-dl]'))b.insertAdjacentHTML('beforebegin',`<button type="button" class="dlbtn" data-dl="${i}">Tải ảnh</button>`)});
   if(URLS.length)$('dl-all').hidden=false;}}).catch(()=>{});}
@@ -1164,6 +1244,7 @@ $('mk-img').addEventListener('click',async()=>{
   const btn=$('mk-img');btn.disabled=true;$('imgs').innerHTML='';IMGS.length=0;URLS.length=0;$('dl-all').hidden=true;
   try{await document.fonts.ready}catch(_){}
   const list=[['Tổng quan',posterCover()],...DAYS.map((d,i)=>['Thực đơn '+d,posterDay(i)]),['Lưu ý',posterTips()]];
+  if(radio('mode')==='free'&&state.use.size) list.push(['Gợi ý nâng cấp',posterUpsell()]);
   const host=$('poster-host');
   try{
     for(let i=0;i<list.length;i++){
@@ -1177,7 +1258,7 @@ $('mk-img').addEventListener('click',async()=>{
       fig.innerHTML=`<img src="${url}" alt="${list[i][0]}"><figcaption><span>${i+1}. ${list[i][0]}</span><span style="display:flex;gap:6px">${CAN_DL?`<button type="button" class="dlbtn" data-dl="${i}">Tải ảnh</button>`:''}<button type="button" class="alt" data-copy="${i}">Sao chép</button></span></figcaption>`;
       $('imgs').appendChild(fig);
     }
-    $('img-msg').textContent=CAN_DL?'Đã tạo xong 9 ảnh. Bấm "Tải cả 9 ảnh" hoặc "Tải ảnh" dưới từng ảnh.':'Đã tạo xong 9 ảnh. Nhấn giữ (điện thoại) hoặc chuột phải (máy tính) vào ảnh, chọn Lưu ảnh.';
+    $('img-msg').textContent=CAN_DL?'Đã tạo xong '+URLS.length+' ảnh. Bấm "Tải tất cả ảnh" hoặc "Tải ảnh" dưới từng ảnh.':'Đã tạo xong '+URLS.length+' ảnh. Nhấn giữ (điện thoại) hoặc chuột phải (máy tính) vào ảnh, chọn Lưu ảnh.';
     $('dl-all').hidden=!CAN_DL;
   }catch(err){$('img-msg').textContent='Không tạo được ảnh: '+err.message;}
   host.innerHTML='';btn.disabled=false;btn.textContent='Tạo lại ảnh';
