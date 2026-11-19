@@ -929,7 +929,7 @@ function renderTips(c,sel){
   if(has('dx')&&has('da')) t.push('⚠️ Đang chọn cả Double X và Daily. Cả hai đều là vitamin tổng hợp, chỉ nên chọn một.');
   if(has('fe')&&has('cm')) t.push('<b>Sắt và canxi uống cách nhau ít nhất 2 giờ</b> vì canxi làm giảm hấp thu sắt: Iron Folic sau ăn sáng, Cal Mag D sau ăn tối.');
   if(has('fe')&&has('vc')) t.push('Uống Iron Folic cùng vitamin C sau bữa sáng giúp hấp thu sắt tốt hơn. Không uống sắt cùng trà, cà phê.');
-  if(has('fi')) t.push('<b>Fiber Powder</b> uống trước bữa tối 15–30 phút với nhiều nước để nhanh no. Uống cách các viên vitamin khoảng 1–2 giờ để không ảnh hưởng hấp thu.');
+  if(has('fi')) t.push('<b>Fiber Powder</b> uống trước bữa tối 15–30 phút với nhiều nước để nhanh no.');
   if(['pr','prc','sp'].filter(id=>sel.some(s=>s.id===id)).length>1) t.push('Đang chọn nhiều loại bột đạm. Bữa sáng chỉ cần 1 muỗng một loại, các loại còn lại dùng ở bữa phụ.');
   if(has('om')||has('ve')||has('co')) t.push('Omega-3, vitamin E, CoQ10 tan trong dầu: uống ngay sau bữa trưa có dầu ô liu thì hấp thu tốt hơn.');
   if(has('zn')&&has('fe')) t.push('Kẽm và sắt nên uống ở hai bữa khác nhau (kẽm sau bữa trưa, sắt sau bữa sáng).');
