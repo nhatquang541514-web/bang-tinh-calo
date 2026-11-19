@@ -670,7 +670,7 @@ function client(){
   }
   c.rate=Math.max(c.delta,0)*7/7700; // kg mỗi tuần
   c.diff=c.goal==='cut'?Math.max(c.w-c.tw,0):Math.max(c.tw-c.w,0);
-  c.weeks=c.rate>0&&c.diff>0?Math.ceil(Math.max(c.diff-(c.goal==='cut'?.5:0),.1)/c.rate):0;
+  c.weeks=c.rate>0&&c.diff>0?Math.ceil(c.diff/c.rate):0;
   c.water=Math.max(c.w*.035,2);
   return c;
 }
@@ -678,7 +678,7 @@ function client(){
 /* Dự kiến cân nặng tuần thứ k */
 function predict(c,k){
   if(k<=0) return c.w;
-  let change=c.rate*k+(c.goal==='cut'?Math.min(.5,c.w*.008):0); // tuần đầu giảm thêm chút nước
+  let change=c.rate*k; // đều mỗi tuần theo mức thâm hụt calo
   change=Math.min(change,c.diff);
   return c.goal==='cut'?c.w-change:c.w+change;
 }
@@ -826,7 +826,7 @@ function render(){
 
 const FEEL={
   cut:{
-    1:['Bụng nhẹ, đỡ đầy hơi, đi vệ sinh đều hơn.','Cân giảm nhanh nhất ở tuần này, phần lớn là nước. Đừng thấy giảm nhanh mà ăn ít thêm.','Có thể hơi đói, thèm ngọt 3–4 ngày đầu. Uống nước, ăn đúng giờ bữa phụ.'],
+    1:['Bụng nhẹ, đỡ đầy hơi, đi vệ sinh đều hơn.','Tuần đầu cân có thể xuống nhiều hơn dự kiến do cơ thể bớt nước. Đừng thấy giảm nhanh mà ăn ít thêm.','Có thể hơi đói, thèm ngọt 3–4 ngày đầu. Uống nước, ăn đúng giờ bữa phụ.'],
     2:['Đã quen bữa sáng BodyKey, ít thèm ăn vặt hơn.','Ngủ ngon hơn, đỡ uể oải buổi chiều.','Cân giảm chậm lại so với tuần 1, đây là bình thường.'],
     4:['Quần áo rộng hơn, vòng eo nhỏ đi rõ.','Người nhẹ nhõm, leo cầu thang đỡ mệt.','Đo eo, chụp ảnh so sánh với ngày đầu. Đánh giá lại calo theo cân nặng mới.'],
     8:['Thay đổi rõ khi nhìn ảnh trước, sau. Người quen hỏi thăm.','Thói quen ăn uống đã ổn định, không còn thấy khó.','Nếu cân đứng 2 tuần liền, tăng vận động hoặc bớt 100–150 kcal.'],
