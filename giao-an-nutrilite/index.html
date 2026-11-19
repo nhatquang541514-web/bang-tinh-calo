@@ -598,7 +598,7 @@ function buildDay(d,c,P){
     const its=[];
     if(useBk) its.push({custom:true,n:bkLabel(P.use),g:'1 phần',e:'Theo muỗng đong trong hộp',k:bkN.kcal,p:bkN.p});
     if(usePr) its.push({custom:true,n:prLabel(P.use),g:'1 muỗng',e:'Khoảng 10 g, pha chung',k:prN.kcal,p:prN.p});
-    its.push({custom:true,n:'Nước lọc hoặc sữa hạt không đường',g:'250 ml',e:'1 ly vừa. Lắc đều, uống chậm trong 10–15 phút',k:0,p:0});
+    its.push({custom:true,n:'Nước lọc hoặc sữa hạt không đường',g:'250 ml',e:'1 ly vừa. Lắc đều',k:0,p:0});
     return its.concat(extra||[]);
   };
   if(c.goal==='cut'){
@@ -921,7 +921,7 @@ function renderTips(c,sel){
   const has=id=>sel.some(s=>s.id===id||ALIAS[s.id]===id);
   const t=[];
   if(c.goal==='cut'){
-    if(has('bk')) t.push('<b>BodyKey + Protein buổi sáng</b> là bữa chủ lực: đủ đạm (khoảng '+Math.round(state.nut.bk.p+(has('pr')?state.nut.pr.p:0))+' g) mà chỉ khoảng '+fmt(state.nut.bk.kcal+(has('pr')?state.nut.pr.kcal:0))+' kcal, giúp no tới trưa. Uống chậm trong 10–15 phút, không uống vội.');
+    if(has('bk')) t.push('<b>BodyKey + Protein buổi sáng</b> là bữa chủ lực: đủ đạm (khoảng '+Math.round(state.nut.bk.p+(has('pr')?state.nut.pr.p:0))+' g) mà chỉ khoảng '+fmt(state.nut.bk.kcal+(has('pr')?state.nut.pr.kcal:0))+' kcal, giúp no tới trưa.');
     if(!has('bk')) t.push('Chưa chọn BodyKey: bữa sáng đang dùng trứng và bánh mì. Thêm BodyKey giúp kiểm soát calo bữa sáng dễ hơn.');
   }else if(has('pr')) t.push('<b>Protein</b> pha vào sữa ở bữa sáng và bữa phụ để thêm đạm mà không phải ăn thêm nhiều.');
   if(has('cb')) t.push('<b>CB Plus</b> dùng ở bữa trưa và bữa tối, là các bữa có cơm, bún, khoai. Vẫn giữ đúng số gram tinh bột trong thực đơn.');
